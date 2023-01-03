@@ -1,6 +1,6 @@
 package com.delivery.mydelivery;
 
-import com.delivery.mydelivery.category.CategoryService;
+import com.delivery.mydelivery.store.StoreService;
 import com.delivery.mydelivery.login.LoginService;
 import com.delivery.mydelivery.store.StoreEntity;
 import com.delivery.mydelivery.user.UserEntity;
@@ -23,7 +23,7 @@ class MydeliveryApplicationTests {
 	private LoginService loginService;
 
 	@Autowired
-	private CategoryService categoryService;
+	private StoreService storeService;
 
 	@Test
 	void addUser() {
@@ -53,13 +53,13 @@ class MydeliveryApplicationTests {
 	}
 
 	@Test
-	void findStoreByCategory() {
-		List<StoreEntity> stores = new ArrayList<>();
+	void getStoreList() {
+		List<StoreEntity> storeList = new ArrayList<>();
 
-		stores = categoryService.findStore("피자");
+		storeList = storeService.getStoreList("백반, 죽, 국수");
 
-		for (int i = 0; i < stores.size(); i++) {
-			System.out.println(stores.get(i));
+		for (StoreEntity store : storeList) {
+			System.out.println(store.toString());
 		}
 	}
 

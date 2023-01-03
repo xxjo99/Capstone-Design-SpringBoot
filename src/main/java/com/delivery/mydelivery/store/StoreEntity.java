@@ -8,9 +8,8 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
-@Table(name="store_info")
+@Table(name = "store_info")
 public class StoreEntity {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int storeId;
@@ -20,6 +19,10 @@ public class StoreEntity {
     private String storePhoneNum;
     private String openTime;
     private String closeTime;
+    private String storeImageUrl;
+    private String storeAddress;
+    private String deliveryTip;
+    private Integer minimumDeliveryPrice;
 
     @Override
     public String toString() {
@@ -30,6 +33,10 @@ public class StoreEntity {
                 ", storePhoneNum='" + storePhoneNum + '\'' +
                 ", openTime='" + openTime + '\'' +
                 ", closeTime='" + closeTime + '\'' +
+                ", storeImageUrl='" + storeImageUrl + '\'' +
+                ", storeAddress='" + storeAddress + '\'' +
+                ", deliveryTip='" + deliveryTip + '\'' +
+                ", minimumDeliveryPrice=" + minimumDeliveryPrice +
                 '}';
     }
 }

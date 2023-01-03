@@ -1,13 +1,12 @@
-package com.delivery.mydelivery.category;
+package com.delivery.mydelivery.store;
 
-import com.delivery.mydelivery.store.StoreEntity;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface CategoryRepository extends CrudRepository<StoreEntity, Integer> {
+public interface StoreRepository extends CrudRepository<StoreEntity, Integer> {
 
     public List<StoreEntity> findByCategory(String category);
 

@@ -1,6 +1,6 @@
 package com.delivery.mydelivery.controller;
 
-import com.delivery.mydelivery.category.CategoryService;
+import com.delivery.mydelivery.store.StoreService;
 import com.delivery.mydelivery.store.StoreEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-public class CategoryController {
+public class StoreController {
 
     @Autowired
-    CategoryService categoryService;
+    StoreService storeService;
 
-    @GetMapping("/category/{category}")
-    public List<StoreEntity> setStoreCategory(@PathVariable String category) {
-        return categoryService.findStore(category);
+    @GetMapping("/storeList/{category}")
+    public List<StoreEntity> setStoreList(@PathVariable String category) {
+        return storeService.getStoreList(category);
     }
 }

@@ -13,7 +13,7 @@ import javax.persistence.*;
     테이블 이름을 따로 지정해야함
     테이블 이름 user로 설정
 */
-@Table(name="user")
+@Table(name = "user")
 public class UserEntity {
     @Id // 식별자 (기본키)
     @GeneratedValue(strategy = GenerationType.IDENTITY) // 식별자 생성을 db에게 맡김
