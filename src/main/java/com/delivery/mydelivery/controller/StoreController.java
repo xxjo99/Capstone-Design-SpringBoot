@@ -15,8 +15,13 @@ public class StoreController {
     @Autowired
     StoreService storeService;
 
-    @GetMapping("/storeList/{category}")
+    @GetMapping("/store/{category}")
     public List<StoreEntity> setStoreList(@PathVariable String category) {
         return storeService.getStoreList(category);
+    }
+
+    @GetMapping("/store/detail/{storeId}")
+    public StoreEntity getStore(@PathVariable int storeId) {
+        return storeService.getStore(storeId);
     }
 }

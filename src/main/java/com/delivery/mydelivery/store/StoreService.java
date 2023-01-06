@@ -12,10 +12,16 @@ public class StoreService {
     @Autowired
     private StoreRepository repository;
 
-    // 넘겨받은 카테고리 데이터를 통해 매장 검색
+    // 카테고리 데이터를 통해 매장 검색
     public List<StoreEntity> getStoreList(String category) {
         List<StoreEntity> storeList = new ArrayList<>();
         storeList = repository.findByCategory(category);
         return storeList;
     }
+
+    public StoreEntity getStore(int storeId) {
+        StoreEntity store = repository.findByStoreId(storeId);
+        return store;
+    }
+
 }

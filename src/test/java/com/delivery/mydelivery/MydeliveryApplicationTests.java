@@ -1,5 +1,7 @@
 package com.delivery.mydelivery;
 
+import com.delivery.mydelivery.menu.MenuEntity;
+import com.delivery.mydelivery.menu.MenuService;
 import com.delivery.mydelivery.store.StoreService;
 import com.delivery.mydelivery.login.LoginService;
 import com.delivery.mydelivery.store.StoreEntity;
@@ -24,6 +26,9 @@ class MydeliveryApplicationTests {
 
 	@Autowired
 	private StoreService storeService;
+
+	@Autowired
+	private MenuService menuService;
 
 	@Test
 	void addUser() {
@@ -60,6 +65,23 @@ class MydeliveryApplicationTests {
 
 		for (StoreEntity store : storeList) {
 			System.out.println(store.toString());
+		}
+	}
+
+	@Test
+	void findStore() {
+		StoreEntity store = storeService.getStore(1);
+		System.out.println(store.toString());
+	}
+
+	@Test
+	void getMenuList() {
+		List<MenuEntity> menuList = new ArrayList<>();
+
+		menuList = menuService.getMenuList(1);
+
+		for (MenuEntity menu : menuList) {
+			System.out.println(menu.toString());
 		}
 	}
 
