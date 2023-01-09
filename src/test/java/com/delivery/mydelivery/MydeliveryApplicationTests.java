@@ -1,6 +1,8 @@
 package com.delivery.mydelivery;
 
 import com.delivery.mydelivery.menu.MenuEntity;
+import com.delivery.mydelivery.menu.MenuOptionContentEntity;
+import com.delivery.mydelivery.menu.MenuOptionEntity;
 import com.delivery.mydelivery.menu.MenuService;
 import com.delivery.mydelivery.store.StoreService;
 import com.delivery.mydelivery.login.LoginService;
@@ -76,14 +78,29 @@ class MydeliveryApplicationTests {
 
 	@Test
 	void getMenuList() {
-		List<MenuEntity> menuList = new ArrayList<>();
-
-		menuList = menuService.getMenuList(1);
+		List<MenuEntity> menuList =  menuService.getMenuList(1);
 
 		for (MenuEntity menu : menuList) {
 			System.out.println(menu.toString());
 		}
 	}
 
+	@Test
+	void getOptionList() {
+		List<MenuOptionEntity> menuOptionList =  menuService.getMenuOptionList(11);
+
+		for (MenuOptionEntity option : menuOptionList) {
+			System.out.println(option.toString());
+		}
+	}
+
+	@Test
+	void getOptionContentList() {
+		List<MenuOptionContentEntity> menuOptionContentList = menuService.getMenuOptionContentList(1);
+
+		for (MenuOptionContentEntity optionContent : menuOptionContentList) {
+			System.out.println(optionContent.toString());
+		}
+	}
 
 }

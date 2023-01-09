@@ -13,10 +13,10 @@ import java.util.List;
 public class StoreController {
 
     @Autowired
-    StoreService storeService;
+    private StoreService storeService;
 
     @GetMapping("/store/{category}")
-    public List<StoreEntity> setStoreList(@PathVariable String category) {
+    public List<StoreEntity> getStoreList(@PathVariable String category) {
         return storeService.getStoreList(category);
     }
 

@@ -2,15 +2,16 @@ package com.delivery.mydelivery.menu;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
 @Setter
+@ToString
 @Table(name = "menu")
 public class MenuEntity {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int menuId;
@@ -20,16 +21,4 @@ public class MenuEntity {
     private String menuPrice;
     private String menuPicUrl;
     private String menuInfo;
-
-    @Override
-    public String toString() {
-        return "MenuEntity{" +
-                "menuId=" + menuId +
-                ", storeId=" + storeId +
-                ", menuName='" + menuName + '\'' +
-                ", menuPrice='" + menuPrice + '\'' +
-                ", menuPicUrl='" + menuPicUrl + '\'' +
-                ", menuInfo='" + menuInfo + '\'' +
-                '}';
-    }
 }

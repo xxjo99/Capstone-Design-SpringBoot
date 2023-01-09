@@ -2,12 +2,14 @@ package com.delivery.mydelivery.store;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
 @Setter
+@ToString
 @Table(name = "store")
 public class StoreEntity {
     @Id
@@ -23,20 +25,4 @@ public class StoreEntity {
     private String storeAddress;
     private String deliveryTip;
     private Integer minimumDeliveryPrice;
-
-    @Override
-    public String toString() {
-        return "StoreEntity{" +
-                "storeId=" + storeId +
-                ", storeName='" + storeName + '\'' +
-                ", category='" + category + '\'' +
-                ", storePhoneNum='" + storePhoneNum + '\'' +
-                ", openTime='" + openTime + '\'' +
-                ", closeTime='" + closeTime + '\'' +
-                ", storeImageUrl='" + storeImageUrl + '\'' +
-                ", storeAddress='" + storeAddress + '\'' +
-                ", deliveryTip='" + deliveryTip + '\'' +
-                ", minimumDeliveryPrice=" + minimumDeliveryPrice +
-                '}';
-    }
 }

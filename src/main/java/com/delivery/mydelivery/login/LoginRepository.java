@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 public interface LoginRepository extends CrudRepository<UserEntity, Integer> {
 
     // 이메일, 비밀번호로 검색
-    public UserEntity findByEmailAndPw(String email, String pw);
+    UserEntity findByEmailAndPw(String email, String pw);
 
 }

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class LoginController {
 
     @Autowired
-    LoginService loginService;
+    private LoginService loginService;
 
     @GetMapping("/login/{email}/{pw}") // 아이디와 비밀번호로 GET방식으로 로그인
     public UserEntity login(@PathVariable String email, @PathVariable String pw) {

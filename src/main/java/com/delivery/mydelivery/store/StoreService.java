@@ -20,8 +20,7 @@ public class StoreService {
     }
 
     public StoreEntity getStore(int storeId) {
-        StoreEntity store = repository.findByStoreId(storeId);
-        return store;
+        return repository.findByStoreId(storeId);
     }
 
 }

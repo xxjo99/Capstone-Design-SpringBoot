@@ -12,8 +12,7 @@ public class LoginService {
 
     // 아이디와 비밀번호를 통해 로그인
     public UserEntity login(String email, String pw) {
-        UserEntity user = repository.findByEmailAndPw(email, pw);
-        return user;
+        return repository.findByEmailAndPw(email, pw);
     }
 
 }

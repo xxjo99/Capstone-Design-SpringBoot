@@ -1,6 +1,8 @@
 package com.delivery.mydelivery.controller;
 
 import com.delivery.mydelivery.menu.MenuEntity;
+import com.delivery.mydelivery.menu.MenuOptionContentEntity;
+import com.delivery.mydelivery.menu.MenuOptionEntity;
 import com.delivery.mydelivery.menu.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,11 +15,21 @@ import java.util.List;
 public class MenuController {
 
     @Autowired
-    MenuService menuService;
+    private MenuService menuService;
 
     @GetMapping("/menuList/{storeId}")
-    public List<MenuEntity> setMenuList(@PathVariable int storeId) {
+    public List<MenuEntity> getMenuList(@PathVariable int storeId) {
         return menuService.getMenuList(storeId);
+    }
+
+    @GetMapping("/optionList/{menuId}")
+    public List<MenuOptionEntity> getMenuOptionList(@PathVariable int menuId) {
+        return menuService.getMenuOptionList(menuId);
+    }
+
+    @GetMapping("/optionList/option/{menuOptionId}")
+    public List<MenuOptionContentEntity> getMenuOptionContentList(@PathVariable int menuOptionId) {
+        return menuService.getMenuOptionContentList(menuOptionId);
     }
 
 }

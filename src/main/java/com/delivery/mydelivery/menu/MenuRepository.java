@@ -9,6 +9,6 @@ import java.util.List;
 @Repository
 public interface MenuRepository extends CrudRepository<MenuEntity, Integer> {
 
-    public List<MenuEntity> findByStoreId(int storeId); // 매장 id를 통해 메뉴목록 검색
+    List<MenuEntity> findByStoreId(int storeId); // 매장 id를 통해 메뉴목록 검색
 
 }
