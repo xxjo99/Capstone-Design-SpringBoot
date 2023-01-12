@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Setter
 @ToString
 @Table(name = "menuOptionContent")
-public class MenuOptionContentEntity {
+public class OptionContentEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,7 +19,6 @@ public class MenuOptionContentEntity {
 
     private int menuOptionId; // menuoption fk
     private int menuId; // menuoption fk
-    private int storeId; // menuoption fk
     private String optionContentName;
     private int optionPrice;
 }

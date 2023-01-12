@@ -11,13 +11,12 @@ import javax.persistence.*;
 @Setter
 @ToString
 @Table(name = "menuOption")
-public class MenuOptionEntity {
+public class OptionEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int menuOptionId; // pk
 
     private int menuId; // menu fk
-    private int storeId; // menu fk
     private String optionName;
     private String optionType;
     private Integer maximumSelection;

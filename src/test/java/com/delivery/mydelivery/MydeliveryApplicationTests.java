@@ -1,8 +1,10 @@
 package com.delivery.mydelivery;
 
+import com.delivery.mydelivery.home.CategoryEntity;
+import com.delivery.mydelivery.home.HomeService;
 import com.delivery.mydelivery.menu.MenuEntity;
-import com.delivery.mydelivery.menu.MenuOptionContentEntity;
-import com.delivery.mydelivery.menu.MenuOptionEntity;
+import com.delivery.mydelivery.menu.OptionContentEntity;
+import com.delivery.mydelivery.menu.OptionEntity;
 import com.delivery.mydelivery.menu.MenuService;
 import com.delivery.mydelivery.store.StoreService;
 import com.delivery.mydelivery.login.LoginService;
@@ -31,6 +33,9 @@ class MydeliveryApplicationTests {
 
 	@Autowired
 	private MenuService menuService;
+
+	@Autowired
+	private HomeService homeService;
 
 	@Test
 	void addUser() {
@@ -87,19 +92,28 @@ class MydeliveryApplicationTests {
 
 	@Test
 	void getOptionList() {
-		List<MenuOptionEntity> menuOptionList =  menuService.getMenuOptionList(11);
+		List<OptionEntity> menuOptionList =  menuService.getMenuOptionList(11);
 
-		for (MenuOptionEntity option : menuOptionList) {
+		for (OptionEntity option : menuOptionList) {
 			System.out.println(option.toString());
 		}
 	}
 
 	@Test
 	void getOptionContentList() {
-		List<MenuOptionContentEntity> menuOptionContentList = menuService.getMenuOptionContentList(1);
+		List<OptionContentEntity> menuOptionContentList = menuService.getMenuOptionContentList(1);
 
-		for (MenuOptionContentEntity optionContent : menuOptionContentList) {
+		for (OptionContentEntity optionContent : menuOptionContentList) {
 			System.out.println(optionContent.toString());
+		}
+	}
+
+	@Test
+	void getCategoryList() {
+		List<CategoryEntity> categoryList = homeService.getCategoryList();
+
+		for (CategoryEntity category : categoryList) {
+			System.out.println(category.toString());
 		}
 	}
 
