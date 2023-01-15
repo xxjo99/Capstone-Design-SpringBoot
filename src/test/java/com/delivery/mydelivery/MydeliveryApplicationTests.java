@@ -6,6 +6,8 @@ import com.delivery.mydelivery.menu.MenuEntity;
 import com.delivery.mydelivery.menu.OptionContentEntity;
 import com.delivery.mydelivery.menu.OptionEntity;
 import com.delivery.mydelivery.menu.MenuService;
+import com.delivery.mydelivery.order.OrderEntity;
+import com.delivery.mydelivery.order.OrderService;
 import com.delivery.mydelivery.store.StoreService;
 import com.delivery.mydelivery.login.LoginService;
 import com.delivery.mydelivery.store.StoreEntity;
@@ -36,6 +38,9 @@ class MydeliveryApplicationTests {
 
 	@Autowired
 	private HomeService homeService;
+
+	@Autowired
+	private OrderService orderService;
 
 	@Test
 	void addUser() {
@@ -76,12 +81,6 @@ class MydeliveryApplicationTests {
 	}
 
 	@Test
-	void findStore() {
-		StoreEntity store = storeService.getStore(1);
-		System.out.println(store.toString());
-	}
-
-	@Test
 	void getMenuList() {
 		List<MenuEntity> menuList =  menuService.getMenuList(1);
 
@@ -115,6 +114,57 @@ class MydeliveryApplicationTests {
 		for (CategoryEntity category : categoryList) {
 			System.out.println(category.toString());
 		}
+	}
+
+	@Test
+	void findStoreInCart() {
+		int userId = 1;
+		int storeId = 5;
+
+		List<OrderEntity> orderList = orderService.findStore(userId, storeId);
+		for (OrderEntity order : orderList) {
+			System.out.println(order.toString());
+		}
+	}
+
+	@Test
+	void addMenu() {
+		OrderEntity order = new OrderEntity();
+
+		order.setMenuId(11);
+		order.setAmount(1);
+		order.setUserId(1);
+		order.setTotalPrice(1);
+		order.setSelectOption("1");
+
+		orderService.addMenu(order);
+	}
+
+	@Test
+	void getMenuInCart() {
+		int userId = 1;
+
+		List<OrderEntity> orderList = orderService.getOrderList(userId);
+
+		for (OrderEntity order : orderList) {
+			System.out.println(order.toString());
+		}
+	}
+
+	@Test
+	void getOptionContentName() {
+		String list = "1,2,3,4";
+		List<String> result = orderService.getOptionContentList(list);
+
+		for (String name : result) {
+			System.out.println(name);
+		}
+	}
+
+	@Test
+	void getMenuName() {
+		int menuId = 11;
+		System.out.println(menuService.getMenuName(menuId));
 	}
 
 }

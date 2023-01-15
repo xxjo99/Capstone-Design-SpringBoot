@@ -17,6 +17,7 @@ public class OptionContentEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int menuOptionContentId; // pk
 
+    private int storeId; // menuoption fk
     private int menuOptionId; // menuoption fk
     private int menuId; // menuoption fk
     private String optionContentName;

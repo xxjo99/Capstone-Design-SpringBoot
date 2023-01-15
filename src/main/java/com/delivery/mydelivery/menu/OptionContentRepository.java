@@ -10,4 +10,6 @@ public interface OptionContentRepository extends CrudRepository<OptionContentEnt
 
     List<OptionContentEntity> findByMenuOptionId(int menuOptionId); // menuOptionId를 통해 옵션의 내용 검색
 
+    OptionContentEntity findByMenuOptionContentId(int menuOptionContentId); // menuOptionId를 통해 옵션의 내용 검색
+
 }

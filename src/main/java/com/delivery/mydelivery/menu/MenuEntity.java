@@ -18,7 +18,7 @@ public class MenuEntity {
 
     private int storeId;
     private String menuName;
-    private String menuPrice;
+    private int menuPrice;
     private String menuPicUrl;
     private String menuInfo;
 }

@@ -32,4 +32,9 @@ public class MenuController {
         return menuService.getMenuOptionContentList(menuOptionId);
     }
 
+    @GetMapping("/menu/menuList/{menuId}")
+    public String getMenuName(@PathVariable int menuId) {
+        return menuService.getMenuName(menuId);
+    }
+
 }

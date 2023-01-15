@@ -16,8 +16,9 @@ public class OptionEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int menuOptionId; // pk
 
+    private int storeId; // menu fk
     private int menuId; // menu fk
     private String optionName;
-    private String optionType;
-    private Integer maximumSelection;
+    private int minimumSelection;
+    private int maximumSelection;
 }
