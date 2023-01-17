@@ -15,6 +15,9 @@ public class OrderService {
     @Autowired
     private OptionContentRepository optionContentRepository;
 
+    @Autowired
+    private RecruitRepository recruitRepository;
+
     // 장바구니에 메뉴 추가
     public OrderEntity addMenu(OrderEntity order) {
         return orderRepository.save(order);
@@ -45,6 +48,22 @@ public class OrderService {
         }
 
         return optionContentResult;
+    }
+
+    // 메뉴 개수 수정
+    public OrderEntity modifyAmount(OrderEntity order) {
+        return orderRepository.save(order);
+    }
+
+    // 메뉴 삭제
+    public void delete(int orderId) {
+        OrderEntity order = orderRepository.findByOrderId(orderId);
+        orderRepository.delete(order);
+    }
+
+    // 모집글 등록
+    public RecruitEntity registerRecruit(RecruitEntity recruit) {
+        return recruitRepository.save(recruit);
     }
 
 }

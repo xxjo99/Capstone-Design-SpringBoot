@@ -11,4 +11,7 @@ public interface OrderRepository extends CrudRepository<OrderEntity, Integer> {
     List<OrderEntity> findByUserIdAndStoreIdNot(int userId, int storeId); // 해당 매장이 아닌 다른 매장이 있는지 확인
 
     List<OrderEntity> findByUserId(int userId); // 장바구니에 담긴 메뉴를 가져옴
+
+    OrderEntity findByOrderId(int orderId); // 주문번호를 통해 검색
+
 }
