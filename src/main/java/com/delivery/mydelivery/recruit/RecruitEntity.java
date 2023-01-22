@@ -1,4 +1,4 @@
-package com.delivery.mydelivery.order;
+package com.delivery.mydelivery.recruit;
 
 import lombok.Getter;
 import lombok.Setter;

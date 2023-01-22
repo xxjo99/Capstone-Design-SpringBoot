@@ -2,7 +2,7 @@ package com.delivery.mydelivery.controller;
 
 import com.delivery.mydelivery.order.OrderEntity;
 import com.delivery.mydelivery.order.OrderService;
-import com.delivery.mydelivery.order.RecruitEntity;
+import com.delivery.mydelivery.recruit.RecruitEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,9 +44,10 @@ public class OrderController {
         orderService.delete(orderId);
     }
 
+    // 모집글 등록
     @PostMapping("/order/register/recruit")
-    public RecruitEntity registerRecruit(@RequestBody RecruitEntity recruit) {
-        return orderService.registerRecruit(recruit);
+    public void registerRecruit(@RequestBody RecruitEntity recruit) {
+        orderService.registerRecruit(recruit);
     }
 
 }

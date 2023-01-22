@@ -1,8 +1,10 @@
 package com.delivery.mydelivery.order;
 
 import com.delivery.mydelivery.menu.OptionContentRepository;
+import com.delivery.mydelivery.recruit.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
@@ -17,6 +19,12 @@ public class OrderService {
 
     @Autowired
     private RecruitRepository recruitRepository;
+
+    @Autowired
+    private ParticipantRepository participantRepository;
+
+    @Autowired
+    private  ParticipantOrderRepository participantOrderRepository;
 
     // 장바구니에 메뉴 추가
     public OrderEntity addMenu(OrderEntity order) {
@@ -62,8 +70,45 @@ public class OrderService {
     }
 
     // 모집글 등록
-    public RecruitEntity registerRecruit(RecruitEntity recruit) {
-        return recruitRepository.save(recruit);
+    // 모집글 등록 -> 모집글의 참가자에 추가 -> 참가자의 주문목록 메뉴에 등록 -> 장바구니에서 메뉴 삭제
+    @Transactional
+    public void registerRecruit(RecruitEntity recruit) {
+
+        // 1. 모집글 등록
+        RecruitEntity recruitResult = recruitRepository.save(recruit);
+
+        // 2. 참가자 추가
+        int recruitId = recruitResult.getRecruitId();
+        int userId = recruitResult.getUserId();
+
+        ParticipantEntity participant = new ParticipantEntity();
+
+        participant.setRecruitId(recruitId);
+        participant.setUserId(userId);
+        participant.setParticipantType("registrant");
+
+        participantRepository.save(participant);
+
+        // 3. 주문목록 등록
+        List<OrderEntity> orderList = orderRepository.findByUserId(userId);
+        for (OrderEntity order : orderList) {
+            ParticipantOrderEntity participantOrder = new ParticipantOrderEntity();
+
+            participantOrder.setUserId(userId);
+            participantOrder.setStoreId(order.getStoreId());
+            participantOrder.setMenuId(order.getMenuId());
+            participantOrder.setSelectOption(order.getSelectOption());
+            participantOrder.setAmount(order.getAmount());
+            participantOrder.setTotalPrice(order.getTotalPrice());
+
+            participantOrderRepository.save(participantOrder);
+        }
+
+        // 4. 장바구니에서 메뉴 삭제
+        for (OrderEntity order : orderList) {
+            orderRepository.delete(order);
+        }
+
     }
 
 }
