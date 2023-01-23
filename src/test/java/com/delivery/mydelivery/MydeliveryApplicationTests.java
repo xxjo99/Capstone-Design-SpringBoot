@@ -202,4 +202,14 @@ class MydeliveryApplicationTests {
 		boolean flag = recruitService.findUserInRecruit(1, 2);
 		System.out.println(flag);
 	}
+
+	@Test
+	void findRecruitList() {
+		int userId = 1;
+		List<RecruitEntity> list = recruitService.findRecruitList(userId);
+
+		for (RecruitEntity recruit : list) {
+			System.out.println(recruit.toString());
+		}
+	}
 }

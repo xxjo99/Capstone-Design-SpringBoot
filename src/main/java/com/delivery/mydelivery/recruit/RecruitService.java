@@ -47,4 +47,18 @@ public class RecruitService {
         return participantRepository.save(participant);
     }
 
+    // 해당 유저가 참가한 글 검색
+    public List<RecruitEntity> findRecruitList(int userId) {
+
+        List<ParticipantEntity> participantList = participantRepository.findByUserId(userId);
+
+        List<RecruitEntity> recruitList = new ArrayList<>();
+        for (ParticipantEntity participant : participantList) {
+            int recruitId = participant.getRecruitId();
+            recruitList.add(recruitRepository.findByRecruitId(recruitId));
+        }
+
+        return recruitList;
+    }
+
 }

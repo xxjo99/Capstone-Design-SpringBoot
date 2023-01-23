@@ -8,4 +8,6 @@ public interface RecruitRepository extends CrudRepository<RecruitEntity, Integer
 
     RecruitEntity findByUserId(int userId); // 사용자 아이디로 검색
 
+    RecruitEntity findByRecruitId(int recruitId);
+
 }

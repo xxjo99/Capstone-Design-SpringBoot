@@ -10,4 +10,5 @@ public interface ParticipantRepository extends CrudRepository<ParticipantEntity,
 
     ParticipantEntity findByRecruitIdAndUserId(int recruitId, int userId);
 
+    List<ParticipantEntity> findByUserId(int userId);
 }

@@ -13,6 +13,7 @@ public class UserController {
     @Autowired
     UserService userService;
 
+    // 유저 검색
     @GetMapping("/user/findUser/{userId}")
     public UserEntity getUser(@PathVariable int userId) {
         return userService.getUser(userId);

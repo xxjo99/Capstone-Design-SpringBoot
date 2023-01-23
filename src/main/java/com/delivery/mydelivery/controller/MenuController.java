@@ -17,21 +17,25 @@ public class MenuController {
     @Autowired
     private MenuService menuService;
 
+    // 해당 매장의 메뉴가져옴
     @GetMapping("/menu/{storeId}")
     public List<MenuEntity> getMenuList(@PathVariable int storeId) {
         return menuService.getMenuList(storeId);
     }
 
+    // 해당 메뉴의 옵션 가져옴
     @GetMapping("/menu/option/{menuId}")
     public List<OptionEntity> getMenuOptionList(@PathVariable int menuId) {
         return menuService.getMenuOptionList(menuId);
     }
 
+    // 해당 옵션의 내용 가져옴
     @GetMapping("/menu/option/content/{menuOptionId}")
     public List<OptionContentEntity> getMenuOptionContentList(@PathVariable int menuOptionId) {
         return menuService.getMenuOptionContentList(menuOptionId);
     }
 
+    // 메뉴 이름 가져옴
     @GetMapping("/menu/menuList/{menuId}")
     public String getMenuName(@PathVariable int menuId) {
         return menuService.getMenuName(menuId);
