@@ -16,9 +16,9 @@ public class RecruitService {
     @Autowired
     private ParticipantRepository participantRepository;
 
-    public List<RecruitEntity> getRecruitList() {
+    public List<RecruitEntity> getRecruitList(String registrantPlace) {
         List<RecruitEntity> recruitList = new ArrayList<>();
-        Streamable.of(recruitRepository.findAll()).forEach(recruitList::add);
+        recruitList = recruitRepository.findByRegistrantPlace(registrantPlace);
         return recruitList;
     }
 

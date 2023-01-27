@@ -14,10 +14,10 @@ public class RecruitController {
     @Autowired
     private RecruitService recruitService;
 
-    // 모든 모집글 검색
-    @GetMapping("/recruit/getAllRecruit")
-    public List<RecruitEntity> getRecruitList() {
-        return recruitService.getRecruitList();
+    // 해당 유저 위치에 맞는 모집글 검색
+    @GetMapping("/recruit/getRecruitList/{registrantPlace}")
+    public List<RecruitEntity> getRecruitList(@PathVariable String registrantPlace) {
+        return recruitService.getRecruitList(registrantPlace);
     }
 
     // 해당 사용자의 등록글이 있는지 검색

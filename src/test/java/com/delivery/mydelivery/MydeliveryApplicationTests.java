@@ -58,7 +58,6 @@ class MydeliveryApplicationTests {
 		user.setEmail("email");
 		user.setPw("pw");
 		user.setName("name");
-		user.setBirth("birth");
 		user.setPhoneNum("phone");
 
 		registerService.save(user);
@@ -82,7 +81,7 @@ class MydeliveryApplicationTests {
 	void getStoreList() {
 		List<StoreEntity> storeList = new ArrayList<>();
 
-		storeList = storeService.getStoreList("백반, 죽, 국수");
+		storeList = storeService.getStoreList("백반, 죽, 국수", "울산대학교");
 
 		for (StoreEntity store : storeList) {
 			System.out.println(store.toString());
@@ -177,15 +176,6 @@ class MydeliveryApplicationTests {
 	}
 
 	@Test
-	void getRecruitList() {
-		List<RecruitEntity> recruitList = recruitService.getRecruitList();
-
-		for (RecruitEntity recruit : recruitList) {
-			System.out.println(recruit.toString());
-		}
-	}
-
-	@Test
 	void getUser() {
 		int userId = 1;
 		System.out.println(userService.getUser(userId).toString());
@@ -212,4 +202,14 @@ class MydeliveryApplicationTests {
 			System.out.println(recruit.toString());
 		}
 	}
+
+	@Test
+	void getRecruit() {
+		List<RecruitEntity> list = new ArrayList<>();
+		list = recruitService.getRecruitList("울산대학교");
+		for (RecruitEntity recruit : list) {
+			System.out.println(recruit.toString());
+		}
+	}
+
 }

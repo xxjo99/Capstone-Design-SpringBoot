@@ -18,6 +18,7 @@ public class RecruitEntity {
     private int recruitId;
 
     private int userId;
+    private String registrantPlace;
     private int storeId;
     private String place;
     private String deliveryTime;

@@ -23,6 +23,9 @@ public class StoreEntity {
     private String closeTime;
     private String storeImageUrl;
     private String storeAddress;
+    private String deliveryAvailablePlace;
     private String deliveryTip;
     private Integer minimumDeliveryPrice;
+    private String storeInfo;
+    private String deliveryTime;
 }
