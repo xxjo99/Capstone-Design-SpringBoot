@@ -94,7 +94,8 @@ public class OrderService {
         for (OrderEntity order : orderList) {
             ParticipantOrderEntity participantOrder = new ParticipantOrderEntity();
 
-            participantOrder.setUserId(userId);
+            participantOrder.setRecruitId(recruitId);
+            participantOrder.setParticipantId(userId);
             participantOrder.setStoreId(order.getStoreId());
             participantOrder.setMenuId(order.getMenuId());
             participantOrder.setSelectOption(order.getSelectOption());

@@ -17,7 +17,8 @@ public class ParticipantOrderEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int participantOrderId;
 
-    private int userId;
+    private int recruitId;
+    private int participantId;
     private int storeId;
     private int menuId;
     private String selectOption;

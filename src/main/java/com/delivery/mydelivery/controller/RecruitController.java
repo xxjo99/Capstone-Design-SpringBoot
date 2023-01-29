@@ -50,4 +50,22 @@ public class RecruitController {
         return recruitService.findRecruitList(userId);
     }
 
+    // 해당 글에 참가한 구성원 리스트 반환
+    @GetMapping("/recruit/getParticipantList/{recruitId}")
+    public List<ParticipantEntity> getParticipantList(@PathVariable int recruitId) {
+        return recruitService.getParticipantList(recruitId);
+    }
+
+    // 해당 참가자가 담은 메뉴의 총 금액 반환
+    @GetMapping("/recruit/getOrdersTotalPrice/{recruitId}/{participantId}")
+    public int getOrdersTotalPrice(@PathVariable int recruitId, @PathVariable int participantId) {
+        return recruitService.getOrdersTotalPrice(recruitId, participantId);
+    }
+
+    // 자신을 제외한 나머지 참가자 리스트 반환
+    @GetMapping("/recruit/getParticipantListExceptMine/{recruitId}/{userId}")
+    public List<ParticipantEntity> getParticipantListExceptMine(@PathVariable int recruitId, @PathVariable int userId) {
+        return recruitService.getParticipantListExceptMine(recruitId, userId);
+    }
+
 }
