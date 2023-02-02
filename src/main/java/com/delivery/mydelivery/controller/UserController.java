@@ -24,7 +24,7 @@ public class UserController {
 
     // 모든 학교 검색
     @GetMapping("/user/getAllSchool")
-    public List<SchoolEntity> getAllSchool() {
+    public List<String> getAllSchool() {
         return userService.getAllSchool();
     }
 }

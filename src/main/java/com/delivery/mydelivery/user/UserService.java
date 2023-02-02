@@ -12,6 +12,8 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
     private SchoolRepository schoolRepository;
 
     // 유저검색
@@ -19,11 +21,17 @@ public class UserService {
         return userRepository.findById(userId);
     }
 
-    // 모든 학교 검색
-    public List<SchoolEntity> getAllSchool() {
-        List<SchoolEntity> schoolList = new ArrayList<>();
-        Streamable.of(schoolRepository.findAll()).forEach(schoolList::add);
-        return  schoolList;
+    // 모든 학교 검색후 학교명 반환
+    public List<String> getAllSchool() {
+        List<SchoolEntity> schoolEntityList = new ArrayList<>();
+        Streamable.of(schoolRepository.findAll()).forEach(schoolEntityList::add);
+
+        List<String> schoolList = new ArrayList<>();
+        for (SchoolEntity school : schoolEntityList) {
+            schoolList.add(school.getSchoolName());
+        }
+
+        return schoolList;
     }
 
 }

@@ -1,5 +1,7 @@
 package com.delivery.mydelivery.recruit;
 
+import com.delivery.mydelivery.store.StoreEntity;
+import com.delivery.mydelivery.store.StoreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,9 @@ public class RecruitService {
 
     @Autowired
     private ParticipantOrderRepository participantOrderRepository;
+
+    @Autowired
+    private StoreRepository storeRepository;
 
     public List<RecruitEntity> getRecruitList(String registrantPlace) {
         List<RecruitEntity> recruitList = new ArrayList<>();
@@ -96,4 +101,42 @@ public class RecruitService {
 
         return participantListResult;
     }
+
+    // 추가한 메뉴, 배달비를 포함한 최종결제금액 반환
+    public int getFinalPayment(int recruitId, int storeId, int userId) {
+        // 참여자수
+        int participantCount = getParticipantCount(recruitId);
+
+        // 1인당 배달팁
+        StoreEntity store = storeRepository.findByStoreId(storeId);
+        int deliveryTip = Integer.parseInt(store.getDeliveryTip()) / participantCount;
+
+        // 사용자가 담은 메뉴들의 총 금액
+        int totalPrice = getOrdersTotalPrice(recruitId, userId);
+
+        // 최종결제금액
+        return (deliveryTip + totalPrice);
+    }
+
+    // 해당 글에서 해당 유저가 담은 메뉴 반환
+    public List<ParticipantOrderEntity> getOrderList(int recruitId, int participantId) {
+        return participantOrderRepository.findByRecruitIdAndParticipantId(recruitId, participantId);
+    }
+
+    // 개수 수정
+    public ParticipantOrderEntity modifyAmount(ParticipantOrderEntity participantOrder) {
+        return participantOrderRepository.save(participantOrder);
+    }
+
+    // 메뉴 삭제
+    public void delete(int participantOrderId) {
+        ParticipantOrderEntity order = participantOrderRepository.findByParticipantOrderId(participantOrderId);
+        participantOrderRepository.delete(order);
+    }
+
+    // 메뉴 추가
+    public ParticipantOrderEntity addMenu(ParticipantOrderEntity order) {
+        return participantOrderRepository.save(order);
+    }
+
 }

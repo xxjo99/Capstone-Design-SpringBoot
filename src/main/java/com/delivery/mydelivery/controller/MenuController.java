@@ -35,10 +35,10 @@ public class MenuController {
         return menuService.getMenuOptionContentList(menuOptionId);
     }
 
-    // 메뉴 이름 가져옴
-    @GetMapping("/menu/menuList/{menuId}")
-    public String getMenuName(@PathVariable int menuId) {
-        return menuService.getMenuName(menuId);
+    // 메뉴 반환
+    @GetMapping("/menu/getMenu/{menuId}")
+    public MenuEntity getMenu(@PathVariable int menuId) {
+        return menuService.getMenu(menuId);
     }
 
 }

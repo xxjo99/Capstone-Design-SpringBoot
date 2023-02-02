@@ -38,7 +38,7 @@ public class OrderController {
         return orderService.getOptionContentList(contentIdList);
     }
 
-    // 메뉴의 개수 수정
+    // 메뉴 개수 수정
     @PostMapping("/order/modifyAmount")
     public OrderEntity modifyAmount(@RequestBody OrderEntity order) {
         return orderService.modifyAmount(order);

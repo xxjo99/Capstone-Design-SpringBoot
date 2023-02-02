@@ -171,12 +171,6 @@ class MydeliveryApplicationTests {
 	}
 
 	@Test
-	void getMenuName() {
-		int menuId = 11;
-		System.out.println(menuService.getMenuName(menuId));
-	}
-
-	@Test
 	void getUser() {
 		int userId = 1;
 		System.out.println(userService.getUser(userId).toString());

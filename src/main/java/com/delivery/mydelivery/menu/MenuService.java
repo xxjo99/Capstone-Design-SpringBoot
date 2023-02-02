@@ -3,8 +3,6 @@ package com.delivery.mydelivery.menu;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -34,10 +32,9 @@ public class MenuService {
         return optionContentRepository.findByMenuOptionId(menuOptionId);
     }
 
-    // 메뉴 id를 통해 메뉴 이름 반환
-    public String getMenuName(int menuId) {
-        MenuEntity menu = menuRepository.findByMenuId(menuId);
-        return menu.getMenuName();
+    // 메뉴 id를 통해 메뉴 반환
+    public MenuEntity getMenu(int menuId) {
+        return menuRepository.findByMenuId(menuId);
     }
 
 }
