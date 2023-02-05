@@ -25,201 +25,217 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootTest
-
 class MydeliveryApplicationTests {
 
-	@Autowired
-	private RegisterService registerService;
+    @Autowired
+    private RegisterService registerService;
 
-	@Autowired
-	private LoginService loginService;
+    @Autowired
+    private LoginService loginService;
 
-	@Autowired
-	private StoreService storeService;
+    @Autowired
+    private StoreService storeService;
 
-	@Autowired
-	private MenuService menuService;
+    @Autowired
+    private MenuService menuService;
 
-	@Autowired
-	private HomeService homeService;
+    @Autowired
+    private HomeService homeService;
 
-	@Autowired
-	private OrderService orderService;
+    @Autowired
+    private OrderService orderService;
 
-	@Autowired
-	private RecruitService recruitService;
+    @Autowired
+    private RecruitService recruitService;
 
-	@Autowired
-	private UserService userService;
+    @Autowired
+    private UserService userService;
 
-	@Test
-	void addUser() {
-		UserEntity user = new UserEntity();
+    @Test
+    void addUser() {
+        UserEntity user = new UserEntity();
 
-		user.setEmail("email");
-		user.setPw("pw");
-		user.setName("name");
-		user.setPhoneNum("phone");
+        user.setEmail("email");
+        user.setPw("pw");
+        user.setName("name");
+        user.setPhoneNum("phone");
 
-		registerService.save(user);
-	}
+        registerService.save(user);
+    }
 
-	@Test
-	void findUserByEmail() {
-		boolean flag = registerService.findUserByEmail("emai");
-		System.out.println(flag);
-	}
+    @Test
+    void findUserByEmail() {
+        boolean flag = registerService.findUserByEmail("emai");
+        System.out.println(flag);
+    }
 
-	@Test
-	void login() {
-		UserEntity user = new UserEntity();
+    @Test
+    void login() {
+        UserEntity user = new UserEntity();
 
-		user = loginService.login("이메일", "비밀번호");
-		System.out.println(user);
-	}
+        user = loginService.login("이메일", "비밀번호");
+        System.out.println(user);
+    }
 
-	@Test
-	void getStoreList() {
-		List<StoreEntity> storeList = new ArrayList<>();
+    @Test
+    void getStoreList() {
+        List<StoreEntity> storeList = new ArrayList<>();
 
-		storeList = storeService.getStoreList("백반, 죽, 국수", "울산대학교");
+        storeList = storeService.getStoreList("백반, 죽, 국수", "울산대학교");
 
-		for (StoreEntity store : storeList) {
-			System.out.println(store.toString());
-		}
-	}
+        for (StoreEntity store : storeList) {
+            System.out.println(store.toString());
+        }
+    }
 
-	@Test
-	void getMenuList() {
-		List<MenuEntity> menuList =  menuService.getMenuList(1);
+    @Test
+    void getMenuList() {
+        List<MenuEntity> menuList = menuService.getMenuList(1);
 
-		for (MenuEntity menu : menuList) {
-			System.out.println(menu.toString());
-		}
-	}
+        for (MenuEntity menu : menuList) {
+            System.out.println(menu.toString());
+        }
+    }
 
-	@Test
-	void getOptionList() {
-		List<OptionEntity> menuOptionList =  menuService.getMenuOptionList(11);
+    @Test
+    void getOptionList() {
+        List<OptionEntity> menuOptionList = menuService.getMenuOptionList(11);
 
-		for (OptionEntity option : menuOptionList) {
-			System.out.println(option.toString());
-		}
-	}
+        for (OptionEntity option : menuOptionList) {
+            System.out.println(option.toString());
+        }
+    }
 
-	@Test
-	void getOptionContentList() {
-		List<OptionContentEntity> menuOptionContentList = menuService.getMenuOptionContentList(1);
+    @Test
+    void getOptionContentList() {
+        List<OptionContentEntity> menuOptionContentList = menuService.getMenuOptionContentList(1);
 
-		for (OptionContentEntity optionContent : menuOptionContentList) {
-			System.out.println(optionContent.toString());
-		}
-	}
+        for (OptionContentEntity optionContent : menuOptionContentList) {
+            System.out.println(optionContent.toString());
+        }
+    }
 
-	@Test
-	void getCategoryList() {
-		List<CategoryEntity> categoryList = homeService.getCategoryList();
+    @Test
+    void getCategoryList() {
+        List<CategoryEntity> categoryList = homeService.getCategoryList();
 
-		for (CategoryEntity category : categoryList) {
-			System.out.println(category.toString());
-		}
-	}
+        for (CategoryEntity category : categoryList) {
+            System.out.println(category.toString());
+        }
+    }
 
-	@Test
-	void findStoreInCart() {
-		int userId = 1;
-		int storeId = 5;
+    @Test
+    void findStoreInCart() {
+        int userId = 1;
+        int storeId = 5;
 
-		List<OrderEntity> orderList = orderService.findStore(userId, storeId);
-		for (OrderEntity order : orderList) {
-			System.out.println(order.toString());
-		}
-	}
+        List<OrderEntity> orderList = orderService.findStore(userId, storeId);
+        for (OrderEntity order : orderList) {
+            System.out.println(order.toString());
+        }
+    }
 
-	@Test
-	void addMenu() {
-		OrderEntity order = new OrderEntity();
+    @Test
+    void addMenu() {
+        OrderEntity order = new OrderEntity();
 
-		order.setMenuId(11);
-		order.setAmount(1);
-		order.setUserId(1);
-		order.setTotalPrice(1);
-		order.setSelectOption("1");
+        order.setMenuId(11);
+        order.setAmount(1);
+        order.setUserId(1);
+        order.setTotalPrice(1);
+        order.setSelectOption("1");
 
-		orderService.addMenu(order);
-	}
+        orderService.addMenu(order);
+    }
 
-	@Test
-	void getMenuInCart() {
-		int userId = 1;
+    @Test
+    void getMenuInCart() {
+        int userId = 1;
 
-		List<OrderEntity> orderList = orderService.getOrderList(userId);
+        List<OrderEntity> orderList = orderService.getOrderList(userId);
 
-		for (OrderEntity order : orderList) {
-			System.out.println(order.toString());
-		}
-	}
+        for (OrderEntity order : orderList) {
+            System.out.println(order.toString());
+        }
+    }
 
-	@Test
-	void getOptionContentName() {
-		String list = "1,2,3,4";
-		List<String> result = orderService.getOptionContentList(list);
+    @Test
+    void getOptionContentName() {
+        String list = "1,2,3,4";
+        List<String> result = orderService.getOptionContentList(list);
 
-		for (String name : result) {
-			System.out.println(name);
-		}
-	}
+        for (String name : result) {
+            System.out.println(name);
+        }
+    }
 
-	@Test
-	void getUser() {
-		int userId = 1;
-		System.out.println(userService.getUser(userId).toString());
-	}
+    @Test
+    void getUser() {
+        int userId = 1;
+        System.out.println(userService.getUser(userId).toString());
+    }
 
-	@Test
-	void getParticipantCount() {
-		int count = recruitService.getParticipantCount(13);
-		System.out.println(count);
-	}
+    @Test
+    void getParticipantCount() {
+        int count = recruitService.getParticipantCount(13);
+        System.out.println(count);
+    }
 
-	@Test
-	void findUserInRecruit() {
-		boolean flag = recruitService.findUserInRecruit(1, 2);
-		System.out.println(flag);
-	}
+    @Test
+    void findUserInRecruit() {
+        boolean flag = recruitService.findUserInRecruit(1, 2);
+        System.out.println(flag);
+    }
 
-	@Test
-	void findRecruitList() {
-		int userId = 1;
-		List<RecruitEntity> list = recruitService.findRecruitList(userId);
+    @Test
+    void findRecruitList() {
+        int userId = 1;
+        List<RecruitEntity> list = recruitService.findRecruitList(userId);
 
-		for (RecruitEntity recruit : list) {
-			System.out.println(recruit.toString());
-		}
-	}
+        for (RecruitEntity recruit : list) {
+            System.out.println(recruit.toString());
+        }
+    }
 
-	@Test
-	void getRecruit() {
-		List<RecruitEntity> list = recruitService.getRecruitList("울산대학교");
-		for (RecruitEntity recruit : list) {
-			System.out.println(recruit.toString());
-		}
-	}
+    @Test
+    void getRecruit() {
+        List<RecruitEntity> list = recruitService.getRecruitList("울산대학교");
+        for (RecruitEntity recruit : list) {
+            System.out.println(recruit.toString());
+        }
+    }
 
-	@Test
-	void getParticipantList() {
-		List<ParticipantEntity> participantList = recruitService.getParticipantList(9);
-		for (ParticipantEntity participant : participantList) {
-			System.out.println(participant.toString());
-		}
-	}
+    @Test
+    void getParticipantList() {
+        List<ParticipantEntity> participantList = recruitService.getParticipantList(9);
+        for (ParticipantEntity participant : participantList) {
+            System.out.println(participant.toString());
+        }
+    }
 
-	@Test
-	void getParticipantListExceptMine() {
-		List<ParticipantEntity> participantList = recruitService.getParticipantListExceptMine(11, 3);
-		for (ParticipantEntity participant : participantList) {
-			System.out.println(participant.toString());
-		}
-	}
+    @Test
+    void getParticipantListExceptMine() {
+        List<ParticipantEntity> participantList = recruitService.getParticipantListExceptMine(11, 3);
+        for (ParticipantEntity participant : participantList) {
+            System.out.println(participant.toString());
+        }
+    }
+
+    @Test
+    void searchStore() {
+        List<StoreEntity> storeList = storeService.searchStore("고기", "부산대학교");
+        for (StoreEntity store : storeList) {
+            System.out.println(store.toString());
+        }
+    }
+
+    @Test
+    void searchRecruit() {
+        List<RecruitEntity> recruitList = recruitService.searchRecruit("고기", "부산대학교");
+
+        for (RecruitEntity recruit : recruitList) {
+            System.out.println(recruit.toString());
+        }
+    }
 
 }

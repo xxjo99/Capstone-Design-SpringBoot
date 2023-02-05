@@ -34,4 +34,14 @@ public class UserService {
         return schoolList;
     }
 
+    // 이메일로 유저 검색
+    public UserEntity findUser(String email) {
+        return userRepository.findByEmail(email);
+    }
+
+    // 비밀번호 수정
+    public UserEntity modifyPw(UserEntity user) {
+        return userRepository.save(user);
+    }
+
 }

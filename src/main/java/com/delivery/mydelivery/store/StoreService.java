@@ -23,4 +23,21 @@ public class StoreService {
         return repository.findByStoreId(storeId);
     }
 
+    // 매장 검색
+    public List<StoreEntity> searchStore(String keyword, String deliveryAvailablePlace) {
+        List<StoreEntity> storeList = repository.findByStoreNameContaining(keyword);
+
+        List<StoreEntity> storeListResult = new ArrayList<>();
+        for (StoreEntity store : storeList) {
+            String deliveryAvailable = store.getDeliveryAvailablePlace();
+
+            if (deliveryAvailable.equals(deliveryAvailablePlace)) {
+                storeListResult.add(store);
+            }
+        }
+
+        return storeListResult;
+
+    }
+
 }

@@ -14,4 +14,6 @@ public interface RecruitRepository extends CrudRepository<RecruitEntity, Integer
 
     RecruitEntity findByRecruitId(int recruitId);
 
+    List<RecruitEntity> findByStoreId(int storeId); // 매장 id로 모집글 검색
+
 }

@@ -26,4 +26,10 @@ public class StoreController {
     public StoreEntity getStore(@PathVariable int storeId) {
         return storeService.getStore(storeId);
     }
+
+    // 매장 검색
+    @GetMapping("/store/search/{keyword}/{deliveryAvailablePlace}")
+    public List<StoreEntity> searchStore(@PathVariable String keyword, @PathVariable String deliveryAvailablePlace) {
+        return  storeService.searchStore(keyword, deliveryAvailablePlace);
+    }
 }

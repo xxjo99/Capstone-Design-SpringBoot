@@ -2,6 +2,7 @@ package com.delivery.mydelivery.recruit;
 
 import com.delivery.mydelivery.store.StoreEntity;
 import com.delivery.mydelivery.store.StoreRepository;
+import com.delivery.mydelivery.store.StoreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,9 @@ public class RecruitService {
 
     @Autowired
     private StoreRepository storeRepository;
+
+    @Autowired
+    private StoreService storeService;
 
     public List<RecruitEntity> getRecruitList(String registrantPlace) {
         List<RecruitEntity> recruitList = new ArrayList<>();
@@ -137,6 +141,21 @@ public class RecruitService {
     // 메뉴 추가
     public ParticipantOrderEntity addMenu(ParticipantOrderEntity order) {
         return participantOrderRepository.save(order);
+    }
+
+    // 모집글 검색
+    public List<RecruitEntity> searchRecruit(String keyword, String deliveryAvailablePlace) {
+        // 1. 매장리스트 검색
+        List<StoreEntity> storeList = storeService.searchStore(keyword, deliveryAvailablePlace);
+
+        // 2. 검색된 매장리스트의 id로 모집글 검색 후 반환
+        List<RecruitEntity> recruitList = new ArrayList<>();
+        for (StoreEntity store : storeList) {
+            List<RecruitEntity> recruitResult = recruitRepository.findByStoreId(store.getStoreId());
+            recruitList.addAll(recruitResult);
+        }
+
+        return recruitList;
     }
 
 }

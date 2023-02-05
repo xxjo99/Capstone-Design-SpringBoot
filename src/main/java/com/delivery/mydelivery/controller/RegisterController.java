@@ -36,7 +36,7 @@ public class RegisterController {
         String toMail = email; // 보낼 이메일 주소
         String title = "회원가입 인증 이메일 입니다."; // 이메일 제목
         String content = // 내용
-                        "인증 번호는 " + authNum + "입니다." +
+                "인증 번호는 " + authNum + "입니다." +
                         "<br>" +
                         "해당 인증번호를 인증번호 확인란에 기입하여 주세요.";
 
@@ -46,7 +46,7 @@ public class RegisterController {
             helper.setFrom(setFrom);
             helper.setTo(toMail);
             helper.setSubject(title);
-            helper.setText(content,true);
+            helper.setText(content, true);
             mailSender.send(message);
         } catch (Exception e) {
             e.printStackTrace();

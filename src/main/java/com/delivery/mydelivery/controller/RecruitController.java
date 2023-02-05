@@ -98,4 +98,10 @@ public class RecruitController {
     public ParticipantOrderEntity addMenu(@RequestBody ParticipantOrderEntity order) {
         return recruitService.addMenu(order);
     }
+
+    // 모집글 검색
+    @GetMapping("/recruit/search/{keyword}/{deliveryAvailablePlace}")
+    public List<RecruitEntity> searchRecruit(@PathVariable String keyword, @PathVariable String deliveryAvailablePlace) {
+        return recruitService.searchRecruit(keyword, deliveryAvailablePlace);
+    }
 }

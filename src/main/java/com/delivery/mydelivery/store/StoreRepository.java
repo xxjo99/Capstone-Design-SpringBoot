@@ -12,4 +12,6 @@ public interface StoreRepository extends CrudRepository<StoreEntity, Integer> {
 
     StoreEntity findByStoreId(int storeId); // 매장 Id를 통해 검색
 
+    List<StoreEntity> findByStoreNameContaining(String keyword); // 매장 검색
+
 }
