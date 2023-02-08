@@ -19,13 +19,13 @@ public class RegisterController {
     private JavaMailSender mailSender;
 
     // 이메일 중복검사
-    @GetMapping("/register/registerCk/{email}")
+    @GetMapping("/register/check/{email}")
     public boolean duplicateEmailCk(@PathVariable String email) {
         return registerService.findUserByEmail(email);
     }
 
     // 이메일 인증번호 전송
-    @GetMapping("/register/sendAuthNum/{email}")
+    @GetMapping("/register/send/{email}")
     public String sendAuthNum(@PathVariable String email) throws Exception {
 
         Random random = new Random(); // 난수 생성

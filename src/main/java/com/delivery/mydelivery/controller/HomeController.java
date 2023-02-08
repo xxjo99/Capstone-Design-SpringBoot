@@ -15,7 +15,7 @@ public class HomeController {
     private HomeService homeService;
 
     // 카테고리 리스트 가져옴
-    @GetMapping("/home/categoryList")
+    @GetMapping("/home/category")
     public List<CategoryEntity> getCategoryList() {
         return homeService.getCategoryList();
     }

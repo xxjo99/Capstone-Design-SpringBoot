@@ -22,19 +22,19 @@ public class UserController {
     private JavaMailSender mailSender;
 
     // 유저 검색
-    @GetMapping("/user/findUser/{userId}")
+    @GetMapping("/user/find/id/{userId}")
     public UserEntity getUser(@PathVariable int userId) {
         return userService.getUser(userId);
     }
 
     // 모든 학교 검색
-    @GetMapping("/user/getAllSchool")
+    @GetMapping("/user/schools")
     public List<String> getAllSchool() {
         return userService.getAllSchool();
     }
 
     // 인증번호 전송 - 비밀번호 찾기
-    @GetMapping("/user/findPw/{email}")
+    @GetMapping("/user/pw/{email}")
     public String sendAuthNum(@PathVariable String email) throws Exception {
 
         Random random = new Random(); // 난수 생성
@@ -65,12 +65,12 @@ public class UserController {
     }
 
     // 이메일로 유저 검색
-    @GetMapping("/user/findUserByEmail/{email}")
+    @GetMapping("/user/find/email/{email}")
     public UserEntity findUser(@PathVariable String email) {
         return userService.findUser(email);
     }
 
-    @PostMapping("/user/modifyPw")
+    @PostMapping("/user/modify")
     public UserEntity modifyPw(@RequestBody UserEntity user) {
         return userService.modifyPw(user);
     }

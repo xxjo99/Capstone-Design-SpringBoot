@@ -36,7 +36,7 @@ public class MenuController {
     }
 
     // 메뉴 반환
-    @GetMapping("/menu/getMenu/{menuId}")
+    @GetMapping("/menu/menus/{menuId}")
     public MenuEntity getMenu(@PathVariable int menuId) {
         return menuService.getMenu(menuId);
     }

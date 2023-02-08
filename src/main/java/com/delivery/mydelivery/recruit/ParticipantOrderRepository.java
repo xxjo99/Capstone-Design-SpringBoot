@@ -10,4 +10,6 @@ public interface ParticipantOrderRepository extends CrudRepository<ParticipantOr
     List<ParticipantOrderEntity> findByRecruitIdAndParticipantId(int recruitId, int participantId);
 
     ParticipantOrderEntity findByParticipantOrderId(int participantOrderId);
+
+    List<ParticipantOrderEntity> findByRecruitId(int recruitId);
 }

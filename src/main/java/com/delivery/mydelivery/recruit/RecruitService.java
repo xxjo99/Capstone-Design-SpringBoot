@@ -133,7 +133,7 @@ public class RecruitService {
     }
 
     // 메뉴 삭제
-    public void delete(int participantOrderId) {
+    public void deleteMenu(int participantOrderId) {
         ParticipantOrderEntity order = participantOrderRepository.findByParticipantOrderId(participantOrderId);
         participantOrderRepository.delete(order);
     }
@@ -156,6 +156,39 @@ public class RecruitService {
         }
 
         return recruitList;
+    }
+
+    // 모집글 삭제
+    public void deleteRecruit(int recruitId) {
+        // 1. 모집글에 유저들이 담은 메뉴들 삭제
+        List<ParticipantOrderEntity> participantOrderList = participantOrderRepository.findByRecruitId(recruitId);
+        for (ParticipantOrderEntity participantOrder : participantOrderList) {
+            participantOrderRepository.delete(participantOrder);
+        }
+
+        // 2. 모집글에 등록된 유저 삭제
+        List<ParticipantEntity> participantList = participantRepository.findByRecruitId(recruitId);
+        for (ParticipantEntity participant : participantList) {
+            participantRepository.delete(participant);
+        }
+
+        // 3. 모집글 삭제
+        RecruitEntity recruit = recruitRepository.findByRecruitId(recruitId);
+        recruitRepository.delete(recruit);
+    }
+
+    // 모집글의 등록자 검색
+    public ParticipantEntity findRegistrant(int recruitId) {
+        List<ParticipantEntity> participantList = participantRepository.findByRecruitId(recruitId);
+
+        ParticipantEntity participantResult = new ParticipantEntity();
+        for (ParticipantEntity participant : participantList) {
+            if (participant.getParticipantType().equals("registrant")) {
+                participantResult = participant;
+            }
+        }
+
+        return participantResult;
     }
 
 }

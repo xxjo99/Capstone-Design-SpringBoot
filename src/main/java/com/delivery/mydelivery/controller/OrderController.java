@@ -21,25 +21,25 @@ public class OrderController {
     }
 
     // 유저id, 매장id를 통해 장바구니에 다른 매장의 메뉴가 들어있는지 확인
-    @GetMapping("/order/findStore/{userId}/{storeId}")
+    @GetMapping("/order/stores/{userId}/{storeId}")
     public List<OrderEntity> findStoreInCart(@PathVariable int userId, @PathVariable int storeId) {
         return orderService.findStore(userId, storeId);
     }
 
     // 장바구니에 담긴 메뉴들 가져옴
-    @GetMapping("/order/getOrderList/{userId}")
+    @GetMapping("/order/orders/{userId}")
     public List<OrderEntity> getOrderList(@PathVariable int userId) {
         return orderService.getOrderList(userId);
     }
 
     // 입력받은 문자열 형태의 옵션내용id 목록을 옵션내용이름으로 변환해서 반환
-    @GetMapping("/order/contentNameList/{contentIdList}")
+    @GetMapping("/order/contents/{contentIdList}")
     public List<String> getContentNameList(@PathVariable String contentIdList) {
         return orderService.getOptionContentList(contentIdList);
     }
 
     // 메뉴 개수 수정
-    @PostMapping("/order/modifyAmount")
+    @PostMapping("/order/modify/amount")
     public OrderEntity modifyAmount(@RequestBody OrderEntity order) {
         return orderService.modifyAmount(order);
     }
