@@ -1,5 +1,6 @@
 package com.delivery.mydelivery.controller;
 
+import com.delivery.mydelivery.order.OrderEntity;
 import com.delivery.mydelivery.user.SchoolEntity;
 import com.delivery.mydelivery.user.UserEntity;
 import com.delivery.mydelivery.user.UserService;
@@ -73,5 +74,11 @@ public class UserController {
     @PostMapping("/user/modify")
     public UserEntity modifyPw(@RequestBody UserEntity user) {
         return userService.modifyPw(user);
+    }
+
+    // 포인트 수정
+    @PostMapping("/user/modify/point")
+    public UserEntity modifyPoint(@RequestBody UserEntity user) {
+        return userService.modifyPoint(user);
     }
 }

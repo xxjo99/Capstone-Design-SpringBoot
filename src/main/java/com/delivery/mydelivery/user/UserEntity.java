@@ -21,4 +21,5 @@ public class UserEntity {
     private String name; // 사용자 이름
     private String phoneNum; // 사용자 휴대폰 번호
     private String school; // 학교
+    private int point; // 포인트
 }

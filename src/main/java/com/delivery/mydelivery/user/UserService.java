@@ -1,5 +1,6 @@
 package com.delivery.mydelivery.user;
 
+import com.delivery.mydelivery.order.OrderEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.Streamable;
 import org.springframework.stereotype.Service;
@@ -41,6 +42,11 @@ public class UserService {
 
     // 비밀번호 수정
     public UserEntity modifyPw(UserEntity user) {
+        return userRepository.save(user);
+    }
+
+    // 포인트 수정
+    public UserEntity modifyPoint(UserEntity user) {
         return userRepository.save(user);
     }
 

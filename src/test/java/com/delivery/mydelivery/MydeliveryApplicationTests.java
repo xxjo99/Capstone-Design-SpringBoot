@@ -8,6 +8,7 @@ import com.delivery.mydelivery.menu.OptionEntity;
 import com.delivery.mydelivery.menu.MenuService;
 import com.delivery.mydelivery.order.OrderEntity;
 import com.delivery.mydelivery.order.OrderService;
+import com.delivery.mydelivery.point.PointService;
 import com.delivery.mydelivery.recruit.ParticipantEntity;
 import com.delivery.mydelivery.recruit.RecruitEntity;
 import com.delivery.mydelivery.recruit.RecruitService;
@@ -50,6 +51,9 @@ class MydeliveryApplicationTests {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private PointService pointService;
 
     @Test
     void addUser() {
