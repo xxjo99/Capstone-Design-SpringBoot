@@ -5,6 +5,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 
 @Entity
 @Getter
@@ -19,8 +20,8 @@ public class StoreEntity {
     private String storeName;
     private String category;
     private String storePhoneNum;
-    private String openTime;
-    private String closeTime;
+    private Timestamp openTime;
+    private Timestamp closeTime;
     private String storeImageUrl;
     private String storeAddress;
     private String deliveryAvailablePlace;

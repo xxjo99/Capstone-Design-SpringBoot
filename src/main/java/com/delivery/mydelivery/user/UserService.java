@@ -40,13 +40,8 @@ public class UserService {
         return userRepository.findByEmail(email);
     }
 
-    // 비밀번호 수정
-    public UserEntity modifyPw(UserEntity user) {
-        return userRepository.save(user);
-    }
-
-    // 포인트 수정
-    public UserEntity modifyPoint(UserEntity user) {
+    // 수정
+    public UserEntity modify(UserEntity user) {
         return userRepository.save(user);
     }
 

@@ -1,7 +1,5 @@
 package com.delivery.mydelivery.controller;
 
-import com.delivery.mydelivery.order.OrderEntity;
-import com.delivery.mydelivery.user.SchoolEntity;
 import com.delivery.mydelivery.user.UserEntity;
 import com.delivery.mydelivery.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,14 +69,10 @@ public class UserController {
         return userService.findUser(email);
     }
 
+    // 정보 수정
     @PostMapping("/user/modify")
-    public UserEntity modifyPw(@RequestBody UserEntity user) {
-        return userService.modifyPw(user);
+    public UserEntity modify(@RequestBody UserEntity user) {
+        return userService.modify(user);
     }
 
-    // 포인트 수정
-    @PostMapping("/user/modify/point")
-    public UserEntity modifyPoint(@RequestBody UserEntity user) {
-        return userService.modifyPoint(user);
-    }
 }

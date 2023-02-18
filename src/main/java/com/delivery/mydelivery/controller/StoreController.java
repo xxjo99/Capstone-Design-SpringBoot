@@ -15,10 +15,16 @@ public class StoreController {
     @Autowired
     private StoreService storeService;
 
-    // 해당 카테고리에 포함된 매장 검색
-    @GetMapping("/store/{category}/{deliveryAvailablePlace}")
-    public List<StoreEntity> getStoreList(@PathVariable String category, @PathVariable String deliveryAvailablePlace) {
-        return storeService.getStoreList(category, deliveryAvailablePlace);
+    // 해당 카테고리에 포함된 오픈한 매장 검색
+    @GetMapping("/store/open/{category}/{deliveryAvailablePlace}")
+    public List<StoreEntity> getOpenedStoreList(@PathVariable String category, @PathVariable String deliveryAvailablePlace) {
+        return storeService.getOpenedStoreList(category, deliveryAvailablePlace);
+    }
+
+    // 해당 카테고리에 포함된 마감한 매장 검색
+    @GetMapping("/store/close/{category}/{deliveryAvailablePlace}")
+    public List<StoreEntity> getClosedStoreList(@PathVariable String category, @PathVariable String deliveryAvailablePlace) {
+        return storeService.getClosedStoreList(category, deliveryAvailablePlace);
     }
 
     // 매장의 상세정보 가져옴
@@ -27,9 +33,9 @@ public class StoreController {
         return storeService.getStore(storeId);
     }
 
-    // 매장 검색
-    @GetMapping("/store/search/{keyword}/{deliveryAvailablePlace}")
-    public List<StoreEntity> searchStore(@PathVariable String keyword, @PathVariable String deliveryAvailablePlace) {
-        return  storeService.searchStore(keyword, deliveryAvailablePlace);
+    // 오픈한 매장 검색
+    @GetMapping("/store/search/open/{keyword}/{deliveryAvailablePlace}")
+    public List<StoreEntity> searchOpenedStore(@PathVariable String keyword, @PathVariable String deliveryAvailablePlace) {
+        return storeService.searchOpenStore(keyword, deliveryAvailablePlace);
     }
 }

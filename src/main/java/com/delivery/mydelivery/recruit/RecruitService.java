@@ -146,7 +146,7 @@ public class RecruitService {
     // 모집글 검색
     public List<RecruitEntity> searchRecruit(String keyword, String deliveryAvailablePlace) {
         // 1. 매장리스트 검색
-        List<StoreEntity> storeList = storeService.searchStore(keyword, deliveryAvailablePlace);
+        List<StoreEntity> storeList = storeService.searchOpenStore(keyword, deliveryAvailablePlace);
 
         // 2. 검색된 매장리스트의 id로 모집글 검색 후 반환
         List<RecruitEntity> recruitList = new ArrayList<>();

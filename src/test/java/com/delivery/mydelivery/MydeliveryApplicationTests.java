@@ -82,17 +82,6 @@ class MydeliveryApplicationTests {
     }
 
     @Test
-    void getStoreList() {
-        List<StoreEntity> storeList = new ArrayList<>();
-
-        storeList = storeService.getStoreList("백반, 죽, 국수", "울산대학교");
-
-        for (StoreEntity store : storeList) {
-            System.out.println(store.toString());
-        }
-    }
-
-    @Test
     void getMenuList() {
         List<MenuEntity> menuList = menuService.getMenuList(1);
 
@@ -226,19 +215,10 @@ class MydeliveryApplicationTests {
     }
 
     @Test
-    void searchStore() {
-        List<StoreEntity> storeList = storeService.searchStore("고기", "부산대학교");
+    void searchOpenStore() {
+        List<StoreEntity> storeList = storeService.searchOpenStore("고기", "부산대학교");
         for (StoreEntity store : storeList) {
             System.out.println(store.toString());
-        }
-    }
-
-    @Test
-    void searchRecruit() {
-        List<RecruitEntity> recruitList = recruitService.searchRecruit("고기", "부산대학교");
-
-        for (RecruitEntity recruit : recruitList) {
-            System.out.println(recruit.toString());
         }
     }
 

@@ -2,6 +2,7 @@ package com.delivery.mydelivery.order;
 
 import com.delivery.mydelivery.menu.OptionContentRepository;
 import com.delivery.mydelivery.recruit.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.*;
 
 @Service
+@Slf4j
 public class OrderService {
 
     @Autowired
@@ -24,7 +26,7 @@ public class OrderService {
     private ParticipantRepository participantRepository;
 
     @Autowired
-    private  ParticipantOrderRepository participantOrderRepository;
+    private ParticipantOrderRepository participantOrderRepository;
 
     // 장바구니에 메뉴 추가
     public OrderEntity addMenu(OrderEntity order) {
@@ -48,8 +50,8 @@ public class OrderService {
         Collections.sort(optionContentList);
 
         List<String> optionContentResult = new ArrayList<>();
-        for (int i = 0; i < optionContentList.size(); i++) {
-            int optionContentId = Integer.parseInt(optionContentList.get(i));
+        for (String s : optionContentList) {
+            int optionContentId = Integer.parseInt(s);
 
             String contentName = optionContentRepository.findByMenuOptionContentId(optionContentId).getOptionContentName();
             optionContentResult.add(contentName);
