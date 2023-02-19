@@ -177,6 +177,19 @@ public class RecruitService {
         recruitRepository.delete(recruit);
     }
 
+    // 모집글 탈퇴
+    public void leaveRecruit(int recruitId, int userId) {
+        // 1. 해당 유저가 담은 메뉴 삭제
+        List<ParticipantOrderEntity> participantOrderList = participantOrderRepository.findByRecruitIdAndParticipantId(recruitId, userId);
+        for (ParticipantOrderEntity participantOrder : participantOrderList) {
+            participantOrderRepository.delete(participantOrder);
+        }
+
+        // 2. 유저 삭제
+        ParticipantEntity participant = participantRepository.findByRecruitIdAndUserId(recruitId, userId);
+        participantRepository.delete(participant);
+    }
+
     // 모집글의 등록자 검색
     public ParticipantEntity findRegistrant(int recruitId) {
         List<ParticipantEntity> participantList = participantRepository.findByRecruitId(recruitId);

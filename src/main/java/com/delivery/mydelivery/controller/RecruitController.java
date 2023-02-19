@@ -106,9 +106,15 @@ public class RecruitController {
     }
 
     // 모집글 삭제
-    @DeleteMapping("/recruit/delete/recruit/{recruitId}")
+    @DeleteMapping("/recruit/delete/{recruitId}")
     public void deleteRecruit(@PathVariable int recruitId) {
         recruitService.deleteRecruit(recruitId);
+    }
+
+    // 모집글 탈퇴
+    @DeleteMapping("/recruit/leave/{recruitId}/{userId}")
+    public void leaveRecruit(@PathVariable int recruitId, @PathVariable int userId) {
+        recruitService.leaveRecruit(recruitId, userId);
     }
 
     // 등록자 검색

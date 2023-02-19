@@ -222,4 +222,9 @@ class MydeliveryApplicationTests {
         }
     }
 
+    @Test
+    void leaveRecruit() {
+        recruitService.leaveRecruit(33, 3);
+    }
+
 }
