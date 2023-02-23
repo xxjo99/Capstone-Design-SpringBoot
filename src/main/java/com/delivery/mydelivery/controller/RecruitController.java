@@ -45,6 +45,12 @@ public class RecruitController {
         return recruitService.participate(participant);
     }
 
+    // 모집글 정보
+    @GetMapping("/recruit/recruit/{recruitId}")
+    public RecruitEntity getRecruit(@PathVariable int recruitId) {
+        return recruitService.getRecruit(recruitId);
+    }
+
     // 해당 유저가 참가한 글 검색
     @GetMapping("/recruit/find/recruits/{userId}")
     public List<RecruitEntity> findRecruitList(@PathVariable int userId) {

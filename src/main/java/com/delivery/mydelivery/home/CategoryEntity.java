@@ -17,5 +17,4 @@ public class CategoryEntity {
     private int categoryId;
 
     private String categoryName;
-    private String categoryImgUrl;
 }

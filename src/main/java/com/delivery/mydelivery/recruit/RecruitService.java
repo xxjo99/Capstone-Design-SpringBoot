@@ -27,10 +27,9 @@ public class RecruitService {
     @Autowired
     private StoreService storeService;
 
+    // 모집글 리스트
     public List<RecruitEntity> getRecruitList(String registrantPlace) {
-        List<RecruitEntity> recruitList = new ArrayList<>();
-        recruitList = recruitRepository.findByRegistrantPlace(registrantPlace);
-        return recruitList;
+        return recruitRepository.findByRegistrantPlace(registrantPlace);
     }
 
     // 해당 사용자의 등록글이 있는지 검색, 있다면 false 없다면 true
@@ -56,6 +55,11 @@ public class RecruitService {
     // 해당글에 참가
     public ParticipantEntity participate(ParticipantEntity participant) {
         return participantRepository.save(participant);
+    }
+
+    // 모집글 정보
+    public RecruitEntity getRecruit(int recruitId) {
+        return recruitRepository.findByRecruitId(recruitId);
     }
 
     // 해당 유저가 참가한 글 검색

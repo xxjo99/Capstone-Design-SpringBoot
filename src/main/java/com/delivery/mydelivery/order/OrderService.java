@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Timestamp;
 import java.util.*;
 
 @Service
@@ -74,9 +75,11 @@ public class OrderService {
     // 모집글 등록
     // 모집글 등록 -> 모집글의 참가자에 추가 -> 참가자의 주문목록 메뉴에 등록 -> 장바구니에서 메뉴 삭제
     @Transactional
-    public void registerRecruit(RecruitEntity recruit) {
+    public void registerRecruit(RecruitEntity recruit, String deliveryTime) {
 
         // 1. 모집글 등록
+        Timestamp timestamp = Timestamp.valueOf(deliveryTime);
+        recruit.setDeliveryTime(timestamp);
         RecruitEntity recruitResult = recruitRepository.save(recruit);
 
         // 2. 참가자 추가

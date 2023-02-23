@@ -5,6 +5,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 
 @Entity
 @Getter
@@ -21,7 +22,7 @@ public class RecruitEntity {
     private String registrantPlace;
     private int storeId;
     private String place;
-    private String deliveryTime;
+    private Timestamp deliveryTime;
     private int person;
 
 }

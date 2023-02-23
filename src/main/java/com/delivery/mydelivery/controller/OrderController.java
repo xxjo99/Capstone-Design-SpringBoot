@@ -52,8 +52,8 @@ public class OrderController {
 
     // 모집글 등록
     @PostMapping("/order/register/recruit")
-    public void registerRecruit(@RequestBody RecruitEntity recruit) {
-        orderService.registerRecruit(recruit);
+    public void registerRecruit(@RequestBody RecruitEntity recruit, @RequestParam("deliveryTime") String deliveryTime) {
+        orderService.registerRecruit(recruit, deliveryTime);
     }
 
 }
