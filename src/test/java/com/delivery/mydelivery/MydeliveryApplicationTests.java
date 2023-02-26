@@ -1,5 +1,7 @@
 package com.delivery.mydelivery;
 
+import com.delivery.mydelivery.StoreKeeper.DeliveryInfoDTO;
+import com.delivery.mydelivery.StoreKeeper.StoreKeeperService;
 import com.delivery.mydelivery.home.CategoryEntity;
 import com.delivery.mydelivery.home.HomeService;
 import com.delivery.mydelivery.menu.MenuEntity;
@@ -58,6 +60,9 @@ class MydeliveryApplicationTests {
 
     @Autowired
     private PointService pointService;
+
+    @Autowired
+    private StoreKeeperService storeKeeperService;
 
     @Test
     void addUser() {
@@ -197,6 +202,7 @@ class MydeliveryApplicationTests {
     @Test
     void getRecruit() {
         List<RecruitEntity> list = recruitService.getRecruitList("울산대학교");
+        System.out.println(LocalDateTime.now());
         for (RecruitEntity recruit : list) {
             System.out.println(recruit.toString());
         }
@@ -231,5 +237,14 @@ class MydeliveryApplicationTests {
         recruitService.leaveRecruit(33, 3);
     }
 
+    @Test
+    void getCompletePaymentRecruitList() {
+        List<DeliveryInfoDTO> deliveryInfoList = storeKeeperService.getCompletePaymentRecruitList();
+
+        System.out.println(deliveryInfoList.size());
+        for (DeliveryInfoDTO deliveryInfo : deliveryInfoList) {
+            System.out.println(deliveryInfo.toString());
+        }
+    }
 
 }

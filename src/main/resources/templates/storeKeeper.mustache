@@ -1,0 +1,24 @@
+{{>layouts/header}}
+<table class="table">
+
+    <thead>
+        <tr>
+            <th scope="col">매장이름</th>
+            <th scope="col">메뉴개수</th>
+            <th scope="col">학교</th>
+            <th scope="col">상세위치</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {{#deliveryInfoList}}
+            <tr>
+                <td>{{storeName}}</td>
+                <td>{{menuAmount}}개</td>
+                <td>{{school}}</td>
+                <td>{{deliveryPlace}}</td>
+            </tr>
+        {{/deliveryInfoList}}
+    </tbody>
+</table>
+{{>layouts/footer}}

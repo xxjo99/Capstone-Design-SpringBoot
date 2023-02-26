@@ -2,6 +2,7 @@ package com.delivery.mydelivery.order;
 
 import com.delivery.mydelivery.menu.OptionContentRepository;
 import com.delivery.mydelivery.recruit.*;
+import com.delivery.mydelivery.user.UserEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -91,6 +92,7 @@ public class OrderService {
         participant.setRecruitId(recruitId);
         participant.setUserId(userId);
         participant.setParticipantType("registrant");
+        participant.setPaymentStatus(0);
 
         participantRepository.save(participant);
 

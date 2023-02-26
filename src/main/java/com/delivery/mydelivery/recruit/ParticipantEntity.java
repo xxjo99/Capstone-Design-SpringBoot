@@ -20,5 +20,6 @@ public class ParticipantEntity {
     private int recruitId;
     private int userId;
     private String participantType;
+    private int paymentStatus;
 
 }

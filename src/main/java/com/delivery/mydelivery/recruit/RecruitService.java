@@ -1,11 +1,18 @@
 package com.delivery.mydelivery.recruit;
 
+import com.delivery.mydelivery.point.PointHistoryEntity;
+import com.delivery.mydelivery.point.PointHistoryRepository;
 import com.delivery.mydelivery.store.StoreEntity;
 import com.delivery.mydelivery.store.StoreRepository;
 import com.delivery.mydelivery.store.StoreService;
+import com.delivery.mydelivery.user.UserEntity;
+import com.delivery.mydelivery.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,13 +30,32 @@ public class RecruitService {
 
     @Autowired
     private StoreRepository storeRepository;
-
     @Autowired
     private StoreService storeService;
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private PointHistoryRepository pointHistoryRepository;
 
     // 모집글 리스트
     public List<RecruitEntity> getRecruitList(String registrantPlace) {
-        return recruitRepository.findByRegistrantPlace(registrantPlace);
+
+        List<RecruitEntity> recruitList = recruitRepository.findByRegistrantPlace(registrantPlace);
+
+        // 현재시간 이후의 모집글만 표시
+        LocalDateTime currentTime = LocalDateTime.now(); // 현재 시간
+
+        List<RecruitEntity> recruitListResult = new ArrayList<>();
+        for (RecruitEntity recruit : recruitList) {
+            Timestamp timestamp = recruit.getDeliveryTime();
+            LocalDateTime deliveryTime = timestamp.toLocalDateTime();
+
+            if (currentTime.isBefore(deliveryTime)) {
+                recruitListResult.add(recruit);
+            }
+        }
+
+        return recruitListResult;
     }
 
     // 해당 사용자의 등록글이 있는지 검색, 있다면 false 없다면 true
@@ -54,6 +80,7 @@ public class RecruitService {
 
     // 해당글에 참가
     public ParticipantEntity participate(ParticipantEntity participant) {
+        participant.setPaymentStatus(0);
         return participantRepository.save(participant);
     }
 
@@ -159,7 +186,20 @@ public class RecruitService {
             recruitList.addAll(recruitResult);
         }
 
-        return recruitList;
+        // 3. 현재시간 이후의 모집글만 검색
+        LocalDateTime currentTime = LocalDateTime.now(); // 현재 시간
+
+        List<RecruitEntity> recruitListResult = new ArrayList<>();
+        for (RecruitEntity recruit : recruitList) {
+            Timestamp timestamp = recruit.getDeliveryTime();
+            LocalDateTime deliveryTime = timestamp.toLocalDateTime();
+
+            if (currentTime.isBefore(deliveryTime)) {
+                recruitListResult.add(recruit);
+            }
+        }
+
+        return recruitListResult;
     }
 
     // 모집글 삭제
@@ -206,6 +246,36 @@ public class RecruitService {
         }
 
         return participantResult;
+    }
+
+    // 해당모집글에 참가한 유저 반환
+    public ParticipantEntity getParticipant(int recruitId, int userId) {
+        return participantRepository.findByRecruitIdAndUserId(recruitId, userId);
+    }
+
+    // 결제하기
+    @Transactional
+    public void payment(int recruitId, int userId, int usedPoint, String content) {
+        // 1. 결제 완료로 변경
+        ParticipantEntity participant = participantRepository.findByRecruitIdAndUserId(recruitId, userId);
+        participant.setPaymentStatus(1);
+        participantRepository.save(participant);
+
+        // 2. 보유 포인트 변경
+        UserEntity user = userRepository.findById(userId);
+        int currentPoint = user.getPoint();
+        user.setPoint(currentPoint - usedPoint);
+        userRepository.save(user);
+
+        // 3. 포인트 사용내역 추가
+        PointHistoryEntity pointHistory = new PointHistoryEntity();
+        pointHistory.setUserId(userId);
+        pointHistory.setPoint(usedPoint);
+        pointHistory.setType("사용");
+        pointHistory.setBalance(currentPoint - usedPoint);
+        pointHistory.setContent(content);
+        pointHistory.setDateTime(Timestamp.valueOf(LocalDateTime.now()));
+        pointHistoryRepository.save(pointHistory);
     }
 
 }

@@ -129,4 +129,16 @@ public class RecruitController {
         return recruitService.findRegistrant(recruitId);
     }
 
+    // 해당모집글에 참가한 유저 반환
+    @GetMapping("/recruit/get/participant/{recruitId}/{userId}")
+    public ParticipantEntity getParticipant(@PathVariable int recruitId, @PathVariable int userId) {
+        return recruitService.getParticipant(recruitId, userId);
+    }
+
+    // 결제하기
+    @PostMapping("/recruit/payment")
+    public void payment(@RequestParam("recruitId") int recruitId, @RequestParam("userId") int userId, @RequestParam("usedPoint") int usedPoint, @RequestParam("content") String content) {
+        recruitService.payment(recruitId, userId, usedPoint, content);
+    }
+
 }

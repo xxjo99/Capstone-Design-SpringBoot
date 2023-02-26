@@ -21,5 +21,6 @@ public class PointHistoryEntity {
     private int point;
     private String type;
     private int balance;
+    private String content;
     private Timestamp dateTime;
 }
