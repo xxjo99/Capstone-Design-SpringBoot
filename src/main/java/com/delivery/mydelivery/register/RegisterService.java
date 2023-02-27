@@ -9,11 +9,11 @@ import org.springframework.stereotype.Service;
 public class RegisterService {
 
     @Autowired
-    private RegisterRepository repository;
+    private RegisterRepository registerRepository;
 
     // 이메일 중복검사, true, false로 검색
     public boolean findUserByEmail(String email) {
-        UserEntity user = repository.findByEmail(email);
+        UserEntity user = registerRepository.findByEmail(email);
 
         if (user == null) { // 존재하지 않으면 true 반환
             return true;
@@ -24,7 +24,7 @@ public class RegisterService {
 
     // 사용자 추가
     public UserEntity save(UserEntity user) {
-        return repository.save(user);
+        return registerRepository.save(user);
     }
 
 }

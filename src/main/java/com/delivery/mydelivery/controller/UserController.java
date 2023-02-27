@@ -1,5 +1,6 @@
 package com.delivery.mydelivery.controller;
 
+import com.delivery.mydelivery.user.ParticipationRestrictionEntity;
 import com.delivery.mydelivery.user.UserEntity;
 import com.delivery.mydelivery.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +42,6 @@ public class UserController {
 
         /* 이메일 보내기 */
         String setFrom = "xxjo4221@gmail.com"; // 자신의 이메일
-        String toMail = email; // 보낼 이메일 주소
         String title = "인증 이메일 입니다."; // 이메일 제목
         String content = // 내용
                 "인증 번호는 " + authNum + "입니다." +
@@ -52,7 +52,7 @@ public class UserController {
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true, "utf-8");
             helper.setFrom(setFrom);
-            helper.setTo(toMail);
+            helper.setTo(email);
             helper.setSubject(title);
             helper.setText(content, true);
             mailSender.send(message);
@@ -73,6 +73,30 @@ public class UserController {
     @PostMapping("/user/modify")
     public UserEntity modify(@RequestBody UserEntity user) {
         return userService.modify(user);
+    }
+
+    // 이용제한 생성
+    @PostMapping("/user/restriction/set/period")
+    public void setParticipationRestriction(@RequestParam("userId") int userId) {
+        userService.setParticipationRestriction(userId);
+    }
+
+    // 이용제한 확인
+    @GetMapping("/user/participation/restriction/check/{userId}")
+    public boolean checkParticipationRestriction(@PathVariable int userId) {
+        return userService.checkParticipationRestriction(userId);
+    }
+
+    // 이용제한 지난지 확인, 지났으면 이용제한 제거
+    @GetMapping("/user/restriction/check/{userId}")
+    public Boolean checkRestriction(@PathVariable int userId) {
+        return userService.checkRestriction(userId);
+    }
+
+    // 포인트 차감
+    @PostMapping("/user/deduct/point")
+    public void deductPoint(@RequestParam("userId") int userId, @RequestParam("deductPoint") int deductPoint) {
+        userService.deductPoint(userId, deductPoint);
     }
 
 }

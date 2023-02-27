@@ -247,4 +247,9 @@ class MydeliveryApplicationTests {
         }
     }
 
+    @Test
+    void checkParticipationRestriction() {
+        System.out.println(userService.checkParticipationRestriction(3));
+    }
+
 }

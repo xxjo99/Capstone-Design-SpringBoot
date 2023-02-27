@@ -1,10 +1,11 @@
 package com.delivery.mydelivery.user;
 
-import com.delivery.mydelivery.order.OrderEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.Streamable;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,13 +14,14 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
-
     @Autowired
     private SchoolRepository schoolRepository;
+    @Autowired
+    private ParticipationRestrictionRepository participationRestrictionRepository;
 
     // 유저검색
     public UserEntity getUser(int userId) {
-        return userRepository.findById(userId);
+        return userRepository.findByUserId(userId);
     }
 
     // 모든 학교 검색후 학교명 반환
@@ -43,6 +45,59 @@ public class UserService {
     // 수정
     public UserEntity modify(UserEntity user) {
         return userRepository.save(user);
+    }
+
+    // 유저의 이용제한 생성
+    public void setParticipationRestriction(int userId) {
+        LocalDateTime currentTime = LocalDateTime.now();
+
+        // 제한이 되어있는지 검색, 이미 제한되어있다면 24시간을 추가로 설정
+        ParticipationRestrictionEntity participationRestriction = participationRestrictionRepository.findByUserId(userId);
+        if (participationRestriction != null) {
+            LocalDateTime restrictionPeriod = participationRestriction.getRestrictionPeriod().toLocalDateTime();
+            LocalDateTime newRestrictionPeriod = restrictionPeriod.plusHours(24);
+            participationRestriction.setRestrictionPeriod(Timestamp.valueOf(newRestrictionPeriod));
+
+            participationRestrictionRepository.save(participationRestriction);
+        } else {
+            participationRestriction = new ParticipationRestrictionEntity();
+
+            participationRestriction.setUserId(userId);
+            Timestamp restrictionPeriod = Timestamp.valueOf(currentTime.plusHours(24));
+            participationRestriction.setRestrictionPeriod(restrictionPeriod);
+
+            participationRestrictionRepository.save(participationRestriction);
+        }
+
+    }
+
+    // 이용제한 확인
+    public Boolean checkParticipationRestriction(int userId) {
+        ParticipationRestrictionEntity participationRestriction = participationRestrictionRepository.findByUserId(userId);
+
+        // 이용제한이 없다면 true 반환
+        return participationRestriction == null;
+    }
+
+    // 이용제한 지난지 확인, 지났으면 이용제한 제거
+    public Boolean checkRestriction(int userId) {
+        ParticipationRestrictionEntity participationRestriction = participationRestrictionRepository.findByUserId(userId);
+        LocalDateTime restrictionPeriod = (participationRestriction.getRestrictionPeriod()).toLocalDateTime();
+
+        // 이용제한 지난지 확인
+        if (LocalDateTime.now().isAfter(restrictionPeriod)) { // 지났다면 이용제한 제거 후 true 반환
+            participationRestrictionRepository.delete(participationRestriction);
+            return true;
+        } else { // 그렇지않다면 false 반환
+            return false;
+        }
+    }
+
+    // 포인트 차감
+    public void deductPoint(int userId, int deductPoint) {
+        UserEntity user = userRepository.findByUserId(userId);
+        user.setPoint(user.getPoint() - deductPoint);
+        userRepository.save(user);
     }
 
 }

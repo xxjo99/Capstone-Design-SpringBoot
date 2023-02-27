@@ -262,7 +262,7 @@ public class RecruitService {
         participantRepository.save(participant);
 
         // 2. 보유 포인트 변경
-        UserEntity user = userRepository.findById(userId);
+        UserEntity user = userRepository.findByUserId(userId);
         int currentPoint = user.getPoint();
         user.setPoint(currentPoint - usedPoint);
         userRepository.save(user);
