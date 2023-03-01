@@ -71,25 +71,27 @@ public class UserService {
 
     }
 
-    // 이용제한 확인
-    public Boolean checkParticipationRestriction(int userId) {
-        ParticipationRestrictionEntity participationRestriction = participationRestrictionRepository.findByUserId(userId);
-
-        // 이용제한이 없다면 true 반환
-        return participationRestriction == null;
+    // 이용제한 시간 반환
+    public ParticipationRestrictionEntity getParticipationRestriction(int userId) {
+        return participationRestrictionRepository.findByUserId(userId);
     }
 
     // 이용제한 지난지 확인, 지났으면 이용제한 제거
     public Boolean checkRestriction(int userId) {
         ParticipationRestrictionEntity participationRestriction = participationRestrictionRepository.findByUserId(userId);
-        LocalDateTime restrictionPeriod = (participationRestriction.getRestrictionPeriod()).toLocalDateTime();
 
-        // 이용제한 지난지 확인
-        if (LocalDateTime.now().isAfter(restrictionPeriod)) { // 지났다면 이용제한 제거 후 true 반환
-            participationRestrictionRepository.delete(participationRestriction);
+        if (participationRestriction == null) { // 이용제한 없다면 true 반환
             return true;
-        } else { // 그렇지않다면 false 반환
-            return false;
+        } else { // 이용제한 기간 지난지 검사
+            LocalDateTime restrictionPeriod = (participationRestriction.getRestrictionPeriod()).toLocalDateTime();
+
+            // 이용제한 지난지 확인
+            if (LocalDateTime.now().isAfter(restrictionPeriod)) { // 지났다면 이용제한 제거 후 true 반환
+                participationRestrictionRepository.delete(participationRestriction);
+                return true;
+            } else { // 그렇지않다면 false 반환
+                return false;
+            }
         }
     }
 

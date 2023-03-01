@@ -81,13 +81,13 @@ public class UserController {
         userService.setParticipationRestriction(userId);
     }
 
-    // 이용제한 확인
-    @GetMapping("/user/participation/restriction/check/{userId}")
-    public boolean checkParticipationRestriction(@PathVariable int userId) {
-        return userService.checkParticipationRestriction(userId);
+    // 이용제한 반환
+    @GetMapping("/user/restriction/get/{userId}")
+    public ParticipationRestrictionEntity getParticipationRestriction(@PathVariable int userId) {
+        return userService.getParticipationRestriction(userId);
     }
 
-    // 이용제한 지난지 확인, 지났으면 이용제한 제거
+    // 이용제한 확인
     @GetMapping("/user/restriction/check/{userId}")
     public Boolean checkRestriction(@PathVariable int userId) {
         return userService.checkRestriction(userId);
