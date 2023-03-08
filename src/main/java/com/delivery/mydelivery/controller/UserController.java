@@ -41,7 +41,8 @@ public class UserController {
         int authNum = random.nextInt(888888) + 111111; // 111111~999999
 
         /* 이메일 보내기 */
-        String setFrom = "xxjo4221@gmail.com"; // 자신의 이메일
+        String setFrom = "gkj005221@gmail.com"; // 자신의 이메일
+        String toMail = email;
         String title = "인증 이메일 입니다."; // 이메일 제목
         String content = // 내용
                 "인증 번호는 " + authNum + "입니다." +
@@ -52,7 +53,7 @@ public class UserController {
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true, "utf-8");
             helper.setFrom(setFrom);
-            helper.setTo(email);
+            helper.setTo(toMail);
             helper.setSubject(title);
             helper.setText(content, true);
             mailSender.send(message);
@@ -73,6 +74,12 @@ public class UserController {
     @PostMapping("/user/modify")
     public UserEntity modify(@RequestBody UserEntity user) {
         return userService.modify(user);
+    }
+
+    // 로그인한 기기의 토큰 저장
+    @PostMapping("/user/set/token")
+    public void setToken(@RequestParam("email") String email, @RequestParam("token") String token) {
+        userService.setToken(email, token);
     }
 
     // 이용제한 생성

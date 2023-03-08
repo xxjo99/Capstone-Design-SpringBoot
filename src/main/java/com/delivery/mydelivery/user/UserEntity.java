@@ -22,4 +22,5 @@ public class UserEntity {
     private String phoneNum; // 사용자 휴대폰 번호
     private String school; // 학교
     private int point; // 포인트
+    private String token; // 로그인 기기 토큰
 }

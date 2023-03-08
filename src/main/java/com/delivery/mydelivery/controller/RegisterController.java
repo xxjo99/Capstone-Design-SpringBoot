@@ -32,7 +32,7 @@ public class RegisterController {
         int authNum = random.nextInt(888888) + 111111; // 111111~999999
 
         /* 이메일 보내기 */
-        String setFrom = "xxjo4221@naver.com"; // 자신의 이메일
+        String setFrom = "xxjo4221@gmail.com"; // 자신의 이메일
         String toMail = email; // 보낼 이메일 주소
         String title = "회원가입 인증 이메일 입니다."; // 이메일 제목
         String content = // 내용

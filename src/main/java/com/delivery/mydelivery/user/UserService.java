@@ -47,6 +47,13 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    // 로그인한 기기의 토큰 저장
+    public void setToken(String email, String token) {
+        UserEntity user = userRepository.findByEmail(email);
+        user.setToken(token);
+        userRepository.save(user);
+    }
+
     // 유저의 이용제한 생성
     public void setParticipationRestriction(int userId) {
         LocalDateTime currentTime = LocalDateTime.now();

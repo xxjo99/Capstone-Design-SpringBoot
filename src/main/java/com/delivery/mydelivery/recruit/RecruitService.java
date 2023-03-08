@@ -278,4 +278,51 @@ public class RecruitService {
         pointHistoryRepository.save(pointHistory);
     }
 
+    // 마감시간이 지나고, 결제가 완료되지 않은 유저가 있다면 포인트 차감 후 강퇴
+    @Transactional
+    public void checkParticipantPaymentStatus(int recruitId) {
+        // 1. 모집글 검색
+        RecruitEntity recruit = recruitRepository.findByRecruitId(recruitId);
+
+        // 2. 배달 매장 검색 후 해당 매장의 배달료 반환
+        StoreEntity store = storeRepository.findByStoreId(recruit.getStoreId());
+        int deliveryTip = Integer.parseInt(store.getDeliveryTip());
+
+        // 3. 해당 모집글에 참가한 유저 검색
+        List<ParticipantEntity> participantList = participantRepository.findByRecruitId(recruitId);
+        int participantCount = participantList.size(); // 모집글의 참가인원 수
+
+        // 4. 인당 지불할 배달비 계산
+        int finalDeliveryTip = deliveryTip / participantCount;
+
+        // 5. 결제하지 않은 유저 검색
+        List<ParticipantEntity> incompleteParticipantList = new ArrayList<>();
+        for (ParticipantEntity participant : participantList) {
+            int status = participant.getPaymentStatus();
+
+            if (status == 0) {
+                incompleteParticipantList.add(participant);
+            }
+        }
+
+        // 6. 유저가 담은 메뉴 모두 삭제, 포인트 차감, 강퇴
+        for (ParticipantEntity participant : incompleteParticipantList) {
+            // 1. 메뉴 삭제
+            List<ParticipantOrderEntity> participantOrderList =participantOrderRepository.findByRecruitIdAndParticipantId(recruitId, participant.getUserId());
+
+            for (ParticipantOrderEntity participantOrder : participantOrderList) {
+                participantOrderRepository.delete(participantOrder);
+            }
+
+            // 2. 포인트 차감
+            UserEntity user = userRepository.findByUserId(participant.getUserId());
+            user.setPoint(user.getPoint() - finalDeliveryTip);
+            userRepository.save(user);
+
+            // 3. 강퇴
+            participantRepository.delete(participant);
+        }
+
+    }
+
 }

@@ -24,5 +24,6 @@ public class RecruitEntity {
     private String place;
     private Timestamp deliveryTime;
     private int person;
+    private int deliveryStart;
 
 }
