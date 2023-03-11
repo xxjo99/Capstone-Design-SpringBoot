@@ -24,6 +24,12 @@ public class UserService {
         return userRepository.findByUserId(userId);
     }
 
+    // 동일한 닉네임이 존재하는지 검색, 없다면 true 반환
+    public Boolean findName(String name) {
+        UserEntity user = userRepository.findByName(name);
+        return user == null;
+    }
+
     // 모든 학교 검색후 학교명 반환
     public List<String> getAllSchool() {
         List<SchoolEntity> schoolEntityList = new ArrayList<>();
@@ -48,9 +54,16 @@ public class UserService {
     }
 
     // 로그인한 기기의 토큰 저장
-    public void setToken(String email, String token) {
+    public void saveToken(String email, String token) {
         UserEntity user = userRepository.findByEmail(email);
         user.setToken(token);
+        userRepository.save(user);
+    }
+
+    // 토큰 삭제
+    public void deleteToken(int userId) {
+        UserEntity user = userRepository.findByUserId(userId);
+        user.setToken(null);
         userRepository.save(user);
     }
 

@@ -14,6 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -56,6 +58,25 @@ public class RecruitService {
         }
 
         return recruitListResult;
+    }
+
+    // 모집글 리스트, 마감시간이 가까운 순부터 정렬
+    public List<RecruitEntity> getRecruitListOrder(String registrantPlace) {
+
+        // 1. 모집글 리스트 저장
+        List<RecruitEntity> recruitList = getRecruitList(registrantPlace);
+
+        // 2. 현재시간
+        Timestamp now = new Timestamp(System.currentTimeMillis());
+
+        // 3. 현재시간과의 차이가 작은 순으로 정렬
+        recruitList.sort((o1, o2) -> {
+            long diff1 = Math.abs(now.getTime() - o1.getDeliveryTime().getTime());
+            long diff2 = Math.abs(now.getTime() - o2.getDeliveryTime().getTime());
+            return Long.compare(diff1, diff2);
+        });
+
+        return recruitList;
     }
 
     // 해당 사용자의 등록글이 있는지 검색, 있다면 false 없다면 true
@@ -308,7 +329,7 @@ public class RecruitService {
         // 6. 유저가 담은 메뉴 모두 삭제, 포인트 차감, 강퇴
         for (ParticipantEntity participant : incompleteParticipantList) {
             // 1. 메뉴 삭제
-            List<ParticipantOrderEntity> participantOrderList =participantOrderRepository.findByRecruitIdAndParticipantId(recruitId, participant.getUserId());
+            List<ParticipantOrderEntity> participantOrderList = participantOrderRepository.findByRecruitIdAndParticipantId(recruitId, participant.getUserId());
 
             for (ParticipantOrderEntity participantOrder : participantOrderList) {
                 participantOrderRepository.delete(participantOrder);
@@ -324,5 +345,6 @@ public class RecruitService {
         }
 
     }
+
 
 }

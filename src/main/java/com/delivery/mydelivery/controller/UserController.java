@@ -27,6 +27,13 @@ public class UserController {
         return userService.getUser(userId);
     }
 
+    // 이름 검색, 중복된 이름 없다면 true 반환
+    @GetMapping("/user/check/name/{name}")
+    public Boolean findName(@PathVariable String name) {
+        return userService.findName(name);
+    }
+
+
     // 모든 학교 검색
     @GetMapping("/user/schools")
     public List<String> getAllSchool() {
@@ -77,9 +84,15 @@ public class UserController {
     }
 
     // 로그인한 기기의 토큰 저장
-    @PostMapping("/user/set/token")
-    public void setToken(@RequestParam("email") String email, @RequestParam("token") String token) {
-        userService.setToken(email, token);
+    @PostMapping("/user/save/token")
+    public void saveToken(@RequestParam("email") String email, @RequestParam("token") String token) {
+        userService.saveToken(email, token);
+    }
+
+    // 토큰 삭제
+    @PostMapping("/user/delete/token")
+    public void deleteToken(@RequestParam("userId") int userId) {
+        userService.deleteToken(userId);
     }
 
     // 이용제한 생성

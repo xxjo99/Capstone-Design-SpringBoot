@@ -17,6 +17,9 @@
                 <td>{{menuAmount}}개</td>
                 <td>{{school}}</td>
                 <td>{{deliveryPlace}}</td>
+                <td>
+                    <button type="button" class="btn btn-primary" onclick=" location.href='/storeKeeper/orderList/' + {{recruitId}} ">상세보기</button>
+                </td>
             </tr>
         {{/deliveryInfoList}}
     </tbody>

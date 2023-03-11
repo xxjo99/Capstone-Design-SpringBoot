@@ -15,10 +15,16 @@ public class RecruitController {
     @Autowired
     private RecruitService recruitService;
 
-    // 해당 유저 위치에 맞는 모집글 검색
+    // 모집글 조회
     @GetMapping("/recruit/recruits/{registrantPlace}")
     public List<RecruitEntity> getRecruitList(@PathVariable String registrantPlace) {
         return recruitService.getRecruitList(registrantPlace);
+    }
+
+    // 모집글 리스트, 마감시간이 가까운 순부터 정렬
+    @GetMapping("/recruit/recruits/order/{registrantPlace}")
+    public List<RecruitEntity> getRecruitListOrder(@PathVariable String registrantPlace) {
+        return recruitService.getRecruitListOrder(registrantPlace);
     }
 
     // 해당 사용자의 등록글이 있는지 검색

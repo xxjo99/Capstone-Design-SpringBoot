@@ -252,4 +252,14 @@ class MydeliveryApplicationTests {
         recruitService.checkParticipantPaymentStatus(51);
     }
 
+    @Test
+    void deleteToken() {
+        userService.deleteToken(3);
+    }
+
+    @Test
+    void findName() {
+        System.out.println(userService.findName("2이름"));
+    }
+
 }

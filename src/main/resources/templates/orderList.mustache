@@ -1,0 +1,30 @@
+{{>layouts/header}}
+
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">메뉴</th>
+        <th scope="col">옵션</th>
+        <th scope="col">선택개수</th>
+        <th scope="col">가격</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    {{#orderList}}
+        <tr>
+            <td>{{menuName}}</td>
+            <td>{{selectOption}}</td>
+            <td>{{amount}}개</td>
+            <td>{{totalPrice}}원</td>
+        </tr>
+    {{/orderList}}
+    </tbody>
+</table>
+
+<div style=" text-align:center">
+    <button type="button" class="btn btn-primary" style="display: inline-block">배달접수</button>
+    <button type="button" class="btn btn-danger" style="display: inline-block">배달거절</button>
+</div>
+
+{{>layouts/footer}}
