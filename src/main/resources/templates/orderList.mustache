@@ -1,5 +1,4 @@
 {{>layouts/header}}
-
 <table class="table">
     <thead>
     <tr>
@@ -22,9 +21,11 @@
     </tbody>
 </table>
 
-<div style=" text-align:center">
-    <button type="button" class="btn btn-primary" style="display: inline-block">배달접수</button>
-    <button type="button" class="btn btn-danger" style="display: inline-block">배달거절</button>
-</div>
+<form method="POST" name="form">
+    <div style=" text-align:center">
+        <button type="submit" class="btn btn-primary" style="display: inline-block">배달접수</button>
+        <button type="submit" class="btn btn-danger" style="display: inline-block">배달거절</button>
+    </div>
+</form>
 
 {{>layouts/footer}}
