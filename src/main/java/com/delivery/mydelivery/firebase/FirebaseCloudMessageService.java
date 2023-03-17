@@ -51,28 +51,6 @@ public class FirebaseCloudMessageService {
         Response response = client.newCall(request).execute();
     }
 
-    // 배달 접수 알림 전송
-    private void sendMessageDeliveryReception(int recruitId) throws IOException {
-
-        // 1. 모집글에 참가한 유저 리스트 검색
-        List<ParticipantEntity> participantList = participantRepository.findByRecruitId(recruitId);
-
-        // 2. 유저의 기기토큰 저장
-        List<String> tokenList = new ArrayList<>();
-        for (ParticipantEntity participant : participantList) {
-            UserEntity user = userRepository.findByUserId(participant.getUserId());
-            tokenList.add(user.getToken());
-        }
-
-        // 3. 메시지 전송
-        String title = "배달 접수";
-        String body = "배달이 접수되었습니다.";
-        for (String token : tokenList) {
-            sendMessage(token, title, body);
-        }
-
-    }
-
     // 삭제알림 전송
     public void sendMessageDeleteRecruit(int recruitId) throws IOException {
         // 1. 모집글에 참가한 유저 리스트 검색
@@ -98,6 +76,23 @@ public class FirebaseCloudMessageService {
 
     }
 
+    // 배달접수알림 전송
+    public void sendMessageReceipt(int recruitId) throws IOException {
+        // 메시지 내용
+        String title = "배달접수";
+        String body = "배달이 접수되었습니다.";
+
+        // 1. 모집글에 참가한 유저 리스트 검색
+        List<ParticipantEntity> participantList = participantRepository.findByRecruitId(recruitId);
+
+        // 2. 참가한 모든 인원에게 메시지 전송
+        for (ParticipantEntity participant : participantList) {
+            UserEntity user = userRepository.findByUserId(participant.getUserId());
+            sendMessage(user.getToken(), title, body);
+        }
+    }
+
+    // 메시지 생성
     private String makeMessage(String targetToken, String title, String body) throws JsonParseException, JsonProcessingException {
         FcmMessage fcmMessage = FcmMessage.builder()
                 .message(FcmMessage.Message.builder()

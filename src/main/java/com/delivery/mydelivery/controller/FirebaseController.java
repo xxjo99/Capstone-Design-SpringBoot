@@ -28,13 +28,6 @@ public class FirebaseController {
                 messageDTO.getBody());
     }
 
-    // 배달접수 알림 전송
-//    @PostMapping("/fcm/send/deliveryReception")
-//    public String sendMessageDeliveryReception(@RequestParam("recruitId") int recruitId) throws IOException {
-//        firebaseCloudMessageService.sendMessageDeliveryReception(recruitId);
-//        return "deliveryReception";
-//    }
-
     // 삭제 알림 전송
     @PostMapping("/fcm/send/deliveryReception")
     public void sendMessageDeleteRecruit(@RequestParam("recruitId") int recruitId) throws IOException {

@@ -3,7 +3,6 @@ package com.delivery.mydelivery.StoreKeeper;
 import com.delivery.mydelivery.menu.MenuEntity;
 import com.delivery.mydelivery.menu.MenuRepository;
 import com.delivery.mydelivery.menu.OptionContentRepository;
-import com.delivery.mydelivery.order.OrderService;
 import com.delivery.mydelivery.recruit.*;
 import com.delivery.mydelivery.store.StoreEntity;
 import com.delivery.mydelivery.store.StoreRepository;
@@ -37,25 +36,29 @@ public class StoreKeeperService {
         List<RecruitEntity> recruitList = new ArrayList<>();
         Streamable.of(recruitRepository.findAll()).forEach(recruitList::add);
 
-        // 2. 모든 인원이 결제가 완료된 모집글만 필터링
+        // 2. 주문대기중이고, 모든 인원이 결제가 완료된 모집글만 필터링
         List<RecruitEntity> completePaymentRecruitList = new ArrayList<>();
         for (RecruitEntity recruit : recruitList) {
-            int recruitId = recruit.getRecruitId();
+            int receiptState = recruit.getReceiptState();
 
-            List<ParticipantEntity> participantList = participantRepository.findByRecruitId(recruitId);
+            if (receiptState == 0) {
+                int recruitId = recruit.getRecruitId();
 
-            boolean checkPaymentStatus = true;
-            for (ParticipantEntity participant : participantList) {
-                int paymentStatus = participant.getPaymentStatus();
+                List<ParticipantEntity> participantList = participantRepository.findByRecruitId(recruitId);
 
-                if (paymentStatus != 1) {
-                    checkPaymentStatus = false;
-                    break;
+                boolean checkPaymentStatus = true;
+                for (ParticipantEntity participant : participantList) {
+                    int paymentStatus = participant.getPaymentStatus();
+
+                    if (paymentStatus != 1) {
+                        checkPaymentStatus = false;
+                        break;
+                    }
                 }
-            }
 
-            if (checkPaymentStatus) {
-                completePaymentRecruitList.add(recruit);
+                if (checkPaymentStatus) {
+                    completePaymentRecruitList.add(recruit);
+                }
             }
 
         }
@@ -144,6 +147,13 @@ public class StoreKeeperService {
         }
 
         return result.toString();
+    }
+
+    // 주문 접수
+    public void receiptOrder(int recruitId) {
+        RecruitEntity recruit = recruitRepository.findByRecruitId(recruitId);
+        recruit.setReceiptState(1);
+        recruitRepository.save(recruit);
     }
 
 }

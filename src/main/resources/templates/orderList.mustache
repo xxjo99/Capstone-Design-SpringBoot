@@ -1,5 +1,7 @@
 {{>layouts/header}}
+
 <table class="table">
+    <input type="hidden" id="recruitId" value="{{recruitId}}">
     <thead>
     <tr>
         <th scope="col">메뉴</th>
@@ -9,23 +11,45 @@
     </tr>
     </thead>
 
-    <tbody>
     {{#orderList}}
+        <tbody>
         <tr>
             <td>{{menuName}}</td>
             <td>{{selectOption}}</td>
             <td>{{amount}}개</td>
             <td>{{totalPrice}}원</td>
         </tr>
+        </tbody>
     {{/orderList}}
-    </tbody>
+
 </table>
 
-<form method="POST" name="form">
-    <div style=" text-align:center">
-        <button type="submit" class="btn btn-primary" style="display: inline-block">배달접수</button>
-        <button type="submit" class="btn btn-danger" style="display: inline-block">배달거절</button>
-    </div>
-</form>
+
+<div style=" text-align:center">
+    <button id="receiptBtn" onclick="receipt()" class="btn btn-primary" style="display: inline-block">배달접수</button>
+    <button type="submit" class="btn btn-danger" style="display: inline-block">배달거절</button>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+
+    <!-- 주문 승인 -->
+    function receipt() {
+        var recruitId = $("#recruitId").val();
+
+        $.ajax({
+            url: "/storeKeeper/receipt/" + recruitId,
+            type: "POST",
+            success: function(response) {
+                    window.location.href = "/storeKeeper/recruit/paymentCompleteList";
+            },
+            error: function(error) {
+                    console.log(error);
+            }
+        });
+    }
+
+</script>
 
 {{>layouts/footer}}
