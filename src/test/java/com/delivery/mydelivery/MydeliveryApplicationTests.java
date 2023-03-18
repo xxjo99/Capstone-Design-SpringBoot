@@ -2,6 +2,8 @@ package com.delivery.mydelivery;
 
 import com.delivery.mydelivery.StoreKeeper.DeliveryInfoDTO;
 import com.delivery.mydelivery.StoreKeeper.StoreKeeperService;
+import com.delivery.mydelivery.delivery.DeliveryService;
+import com.delivery.mydelivery.firebase.FirebaseCloudMessageService;
 import com.delivery.mydelivery.home.CategoryEntity;
 import com.delivery.mydelivery.home.HomeService;
 import com.delivery.mydelivery.menu.MenuEntity;
@@ -24,12 +26,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.time.LocalDate;
+import java.io.IOException;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 @SpringBootTest
 class MydeliveryApplicationTests {
@@ -63,6 +62,12 @@ class MydeliveryApplicationTests {
 
     @Autowired
     private StoreKeeperService storeKeeperService;
+
+    @Autowired
+    private FirebaseCloudMessageService firebaseCloudMessageService;
+
+    @Autowired
+    private DeliveryService deliveryService;
 
     @Test
     void addUser() {
@@ -260,6 +265,20 @@ class MydeliveryApplicationTests {
     @Test
     void findName() {
         System.out.println(userService.findName("2이름"));
+    }
+
+    @Test
+    void testMessage() throws IOException {
+        firebaseCloudMessageService.sendMessageReceipt(65);
+    }
+
+    @Test
+    void getDeliveryList(){
+        List<RecruitEntity> recruitList = deliveryService.getDeliveryList();
+
+        for (RecruitEntity recruit : recruitList) {
+            System.out.println(recruit.toString());
+        }
     }
 
 }

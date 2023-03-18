@@ -4,7 +4,6 @@ import com.delivery.mydelivery.recruit.ParticipantEntity;
 import com.delivery.mydelivery.recruit.ParticipantRepository;
 import com.delivery.mydelivery.user.UserEntity;
 import com.delivery.mydelivery.user.UserRepository;
-import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.auth.oauth2.GoogleCredentials;
@@ -16,7 +15,6 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -92,8 +90,24 @@ public class FirebaseCloudMessageService {
         }
     }
 
+    // 배달시작알림 전송
+    public void sendMessageStartDelivery(int recruitId) throws IOException {
+        // 메시지 내용
+        String title = "배달 시작";
+        String body = "배달이 시작되었습니다.";
+
+        // 1. 모집글에 참가한 유저 리스트 검색
+        List<ParticipantEntity> participantList = participantRepository.findByRecruitId(recruitId);
+
+        // 2. 참가한 모든 인원에게 메시지 전송
+        for (ParticipantEntity participant : participantList) {
+            UserEntity user = userRepository.findByUserId(participant.getUserId());
+            sendMessage(user.getToken(), title, body);
+        }
+    }
+
     // 메시지 생성
-    private String makeMessage(String targetToken, String title, String body) throws JsonParseException, JsonProcessingException {
+    private String makeMessage(String targetToken, String title, String body) throws JsonProcessingException {
         FcmMessage fcmMessage = FcmMessage.builder()
                 .message(FcmMessage.Message.builder()
                         .token(targetToken)

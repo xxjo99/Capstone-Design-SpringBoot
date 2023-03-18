@@ -8,11 +8,11 @@ import org.springframework.stereotype.Service;
 public class LoginService {
 
     @Autowired
-    private LoginRepository repository;
+    private LoginRepository loginRepository;
 
     // 아이디와 비밀번호를 통해 로그인
     public UserEntity login(String email, String pw) {
-        return repository.findByEmailAndPw(email, pw);
+        return loginRepository.findByEmailAndPw(email, pw);
     }
 
 }

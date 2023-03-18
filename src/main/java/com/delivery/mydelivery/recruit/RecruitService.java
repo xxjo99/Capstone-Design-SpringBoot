@@ -81,7 +81,7 @@ public class RecruitService {
     public Boolean findRecruit(int userId) {
         RecruitEntity recruit = recruitRepository.findByUserId(userId);
 
-        // 없을경우
+        // 사용자의 등록글이 없을경우 true 반환
         return recruit == null;
     }
 

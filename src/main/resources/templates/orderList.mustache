@@ -42,10 +42,11 @@
             url: "/storeKeeper/receipt/" + recruitId,
             type: "POST",
             success: function(response) {
-                    window.location.href = "/storeKeeper/recruit/paymentCompleteList";
+                alert("접수 완료");
+                window.location.href = "/storeKeeper/recruit/paymentCompleteList";
             },
             error: function(error) {
-                    console.log(error);
+                console.log(error);
             }
         });
     }
