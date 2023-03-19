@@ -41,4 +41,23 @@ public class DeliveryService {
         recruitRepository.save(recruit);
     }
 
+    // 배달이 출발한 모집글 리스트
+    public List<RecruitEntity> getStartedDeliveryList() {
+        // 1. 모든 모집글 검색
+        List<RecruitEntity> recruitList = new ArrayList<>();
+        Streamable.of(recruitRepository.findAll()).forEach(recruitList::add);
+
+        // 2. 배달이 출발한 모집글만 검색 후 반환
+        List<RecruitEntity> recruitListResult = new ArrayList<>();
+        for (RecruitEntity recruit : recruitList) {
+            int receiptState = recruit.getReceiptState();
+
+            if (receiptState == 2) {
+                recruitListResult.add(recruit);
+            }
+        }
+
+        return recruitListResult;
+    }
+
 }

@@ -2,6 +2,10 @@ package com.delivery.mydelivery.firebase;
 
 import com.delivery.mydelivery.recruit.ParticipantEntity;
 import com.delivery.mydelivery.recruit.ParticipantRepository;
+import com.delivery.mydelivery.recruit.RecruitEntity;
+import com.delivery.mydelivery.recruit.RecruitRepository;
+import com.delivery.mydelivery.store.StoreEntity;
+import com.delivery.mydelivery.store.StoreRepository;
 import com.delivery.mydelivery.user.UserEntity;
 import com.delivery.mydelivery.user.UserRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -29,6 +33,10 @@ public class FirebaseCloudMessageService {
     ParticipantRepository participantRepository;
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    private RecruitRepository recruitRepository;
+    @Autowired
+    private StoreRepository storeRepository;
 
     // 알림 전송
     public void sendMessage(String targetToken, String title, String body) throws IOException {
@@ -77,8 +85,27 @@ public class FirebaseCloudMessageService {
     // 배달접수알림 전송
     public void sendMessageReceipt(int recruitId) throws IOException {
         // 메시지 내용
-        String title = "배달접수";
-        String body = "배달이 접수되었습니다.";
+        RecruitEntity recruit = recruitRepository.findByRecruitId(recruitId);
+        StoreEntity store = storeRepository.findByStoreId(recruit.getStoreId());
+        String storeName = store.getStoreName();
+        String title = "주문이 접수되었습니다.";
+        String body = storeName + "에서 주문하신 배달이 접수되었습니다.";
+
+        // 1. 모집글에 참가한 유저 리스트 검색
+        List<ParticipantEntity> participantList = participantRepository.findByRecruitId(recruitId);
+
+        // 2. 참가한 모든 인원에게 메시지 전송
+        for (ParticipantEntity participant : participantList) {
+            UserEntity user = userRepository.findByUserId(participant.getUserId());
+            sendMessage(user.getToken(), title, body);
+        }
+    }
+
+    // 배달거부알림 전송
+    public void sendMessageRefuse(int recruitId) throws IOException {
+        // 메시지 내용
+        String title = "주문이 취소되었습니다.";
+        String body = "현재 가게에서 주문 접수가 불가능하여 주문이 취소되었습니다.";
 
         // 1. 모집글에 참가한 유저 리스트 검색
         List<ParticipantEntity> participantList = participantRepository.findByRecruitId(recruitId);
@@ -93,8 +120,8 @@ public class FirebaseCloudMessageService {
     // 배달시작알림 전송
     public void sendMessageStartDelivery(int recruitId) throws IOException {
         // 메시지 내용
-        String title = "배달 시작";
-        String body = "배달이 시작되었습니다.";
+        String title = "픽업완료";
+        String body = "주문하신 배달이 시작되었습니다.";
 
         // 1. 모집글에 참가한 유저 리스트 검색
         List<ParticipantEntity> participantList = participantRepository.findByRecruitId(recruitId);

@@ -12,6 +12,7 @@ import com.delivery.mydelivery.menu.OptionEntity;
 import com.delivery.mydelivery.menu.MenuService;
 import com.delivery.mydelivery.order.OrderEntity;
 import com.delivery.mydelivery.order.OrderService;
+import com.delivery.mydelivery.point.PointHistoryEntity;
 import com.delivery.mydelivery.point.PointService;
 import com.delivery.mydelivery.recruit.ParticipantEntity;
 import com.delivery.mydelivery.recruit.RecruitEntity;
@@ -278,6 +279,14 @@ class MydeliveryApplicationTests {
 
         for (RecruitEntity recruit : recruitList) {
             System.out.println(recruit.toString());
+        }
+    }
+
+    @Test
+    void getPointHistory() {
+        List<PointHistoryEntity> pointHistoryList = pointService.getPointHistory(1);
+        for (PointHistoryEntity pointHistory : pointHistoryList) {
+            System.out.println(pointHistory.toString());
         }
     }
 

@@ -35,4 +35,10 @@ public class DeliveryController {
         deliveryService.setDeliveryStateStartDelivery(recruitId);
     }
 
+    // 배달 출발한 모집글 리스트
+    @GetMapping("/delivery/started/deliveryList")
+    public List<RecruitEntity> getStartedDeliveryList() {
+        return deliveryService.getStartedDeliveryList();
+    }
+
 }

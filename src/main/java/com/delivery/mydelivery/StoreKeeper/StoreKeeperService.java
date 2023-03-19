@@ -3,13 +3,19 @@ package com.delivery.mydelivery.StoreKeeper;
 import com.delivery.mydelivery.menu.MenuEntity;
 import com.delivery.mydelivery.menu.MenuRepository;
 import com.delivery.mydelivery.menu.OptionContentRepository;
+import com.delivery.mydelivery.point.PointHistoryEntity;
+import com.delivery.mydelivery.point.PointHistoryRepository;
 import com.delivery.mydelivery.recruit.*;
 import com.delivery.mydelivery.store.StoreEntity;
 import com.delivery.mydelivery.store.StoreRepository;
+import com.delivery.mydelivery.user.UserEntity;
+import com.delivery.mydelivery.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.Streamable;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -30,7 +36,12 @@ public class StoreKeeperService {
     private OptionContentRepository optionContentRepository;
     @Autowired
     private MenuRepository menuRepository;
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private PointHistoryRepository pointHistoryRepository;
 
+    /// 결제완료된 주문 리스트
     public List<DeliveryInfoDTO> getCompletePaymentRecruitList() {
         // 1. 모든 모집글 검색
         List<RecruitEntity> recruitList = new ArrayList<>();
@@ -154,6 +165,40 @@ public class StoreKeeperService {
         RecruitEntity recruit = recruitRepository.findByRecruitId(recruitId);
         recruit.setReceiptState(1);
         recruitRepository.save(recruit);
+    }
+
+    // 주문 거부 (포인트 반환, 환불내역 추가)
+    public void refuseOrder(int recruitId) {
+        // 0. 매장 이름 검색 (이용 상세내역에 추가)
+        RecruitEntity recruit = recruitRepository.findByRecruitId(recruitId);
+        StoreEntity store = storeRepository.findByStoreId(recruit.getStoreId());
+        String storeName = store.getStoreName();
+
+        // 1. 모집글에 참가한 사용자 검색
+        List<ParticipantEntity> participantList = participantRepository.findByRecruitId(recruitId);
+
+        for (ParticipantEntity participant : participantList) {
+            // 2. 포인트 환불
+            int userId = participant.getUserId(); // 유저 아이디
+            int paymentMoney = participant.getPaymentMoney(); // 해당 유저의 사용 금액
+
+            // 유저 검색 후 포인트 환불
+            UserEntity user = userRepository.findByUserId(userId);
+            int balance = user.getPoint() + paymentMoney;
+            user.setPoint(balance);
+            userRepository.save(user);
+
+            // 3. 환불 내역 추가
+            PointHistoryEntity pointHistory = new PointHistoryEntity();
+            pointHistory.setUserId(userId);
+            pointHistory.setPoint(paymentMoney);
+            pointHistory.setType("환불");
+            pointHistory.setBalance(balance);
+            pointHistory.setContent(storeName + " 주문 거절");
+            pointHistory.setDateTime(Timestamp.valueOf(LocalDateTime.now()));
+            pointHistoryRepository.save(pointHistory);
+        }
+
     }
 
 }

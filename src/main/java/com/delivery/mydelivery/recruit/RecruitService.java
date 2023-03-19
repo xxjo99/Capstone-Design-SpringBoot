@@ -275,8 +275,9 @@ public class RecruitService {
     // 결제하기
     @Transactional
     public void payment(int recruitId, int userId, int usedPoint, String content) {
-        // 1. 결제 완료로 변경
+        // 1. 결제 금액 추가, 결제 완료로 변경
         ParticipantEntity participant = participantRepository.findByRecruitIdAndUserId(recruitId, userId);
+        participant.setPaymentMoney(usedPoint);
         participant.setPaymentStatus(1);
         participantRepository.save(participant);
 
@@ -292,7 +293,7 @@ public class RecruitService {
         pointHistory.setPoint(usedPoint);
         pointHistory.setType("사용");
         pointHistory.setBalance(currentPoint - usedPoint);
-        pointHistory.setContent(content);
+        pointHistory.setContent(content + " 결제");
         pointHistory.setDateTime(Timestamp.valueOf(LocalDateTime.now()));
         pointHistoryRepository.save(pointHistory);
     }

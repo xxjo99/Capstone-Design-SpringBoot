@@ -27,7 +27,7 @@
 
 <div style=" text-align:center">
     <button id="receiptBtn" onclick="receipt()" class="btn btn-primary" style="display: inline-block">배달접수</button>
-    <button type="submit" class="btn btn-danger" style="display: inline-block">배달거절</button>
+    <button id="refuseBtn" onclick="refuse()" class="btn btn-danger" style="display: inline-block">배달거절</button>
 </div>
 
 
@@ -43,6 +43,23 @@
             type: "POST",
             success: function(response) {
                 alert("접수 완료");
+                window.location.href = "/storeKeeper/recruit/paymentCompleteList";
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+    }
+
+    <!-- 주문 거부 -->
+    function refuse() {
+        var recruitId = $("#recruitId").val();
+
+        $.ajax({
+            url: "/storeKeeper/refuse/" + recruitId,
+            type: "POST",
+            success: function(response) {
+                alert("거절 완료");
                 window.location.href = "/storeKeeper/recruit/paymentCompleteList";
             },
             error: function(error) {
