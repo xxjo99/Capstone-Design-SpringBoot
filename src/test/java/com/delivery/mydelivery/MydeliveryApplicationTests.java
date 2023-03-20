@@ -12,6 +12,8 @@ import com.delivery.mydelivery.menu.OptionEntity;
 import com.delivery.mydelivery.menu.MenuService;
 import com.delivery.mydelivery.order.OrderEntity;
 import com.delivery.mydelivery.order.OrderService;
+import com.delivery.mydelivery.orderHistory.OrderHistoryEntity;
+import com.delivery.mydelivery.orderHistory.OrderHistoryService;
 import com.delivery.mydelivery.point.PointHistoryEntity;
 import com.delivery.mydelivery.point.PointService;
 import com.delivery.mydelivery.recruit.ParticipantEntity;
@@ -29,6 +31,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 
 @SpringBootTest
@@ -69,6 +72,9 @@ class MydeliveryApplicationTests {
 
     @Autowired
     private DeliveryService deliveryService;
+
+    @Autowired
+    private OrderHistoryService orderHistoryService;
 
     @Test
     void addUser() {
@@ -288,6 +294,20 @@ class MydeliveryApplicationTests {
         for (PointHistoryEntity pointHistory : pointHistoryList) {
             System.out.println(pointHistory.toString());
         }
+    }
+
+    @Test
+    void getOrderHistory() {
+        List<OrderHistoryEntity> orderHistoryList = orderHistoryService.getOrderHistory(1);
+        for (OrderHistoryEntity orderHistory : orderHistoryList) {
+            System.out.println(orderHistoryList.toString());
+        }
+    }
+
+    @Test
+    void getImage() {
+        byte[] image = orderHistoryService.getImage(67, 3);
+        System.out.println(Arrays.toString(image));
     }
 
 }

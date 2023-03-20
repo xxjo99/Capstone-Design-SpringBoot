@@ -133,6 +133,22 @@ public class FirebaseCloudMessageService {
         }
     }
 
+    // 배달 완료 알림 전송
+    public void sendMessageCompleteDelivery(int recruitId) throws IOException {
+        // 메시지 내용
+        String title = "배달 완료";
+        String body = "지정된 장소로 배달이 완료되었습니댜. 주문내역을 확인해주세요";
+
+        // 1. 모집글에 참가한 유저 리스트 검색
+        List<ParticipantEntity> participantList = participantRepository.findByRecruitId(recruitId);
+
+        // 2. 참가한 모든 인원에게 메시지 전송
+        for (ParticipantEntity participant : participantList) {
+            UserEntity user = userRepository.findByUserId(participant.getUserId());
+            sendMessage(user.getToken(), title, body);
+        }
+    }
+
     // 메시지 생성
     private String makeMessage(String targetToken, String title, String body) throws JsonProcessingException {
         FcmMessage fcmMessage = FcmMessage.builder()
