@@ -56,7 +56,7 @@ public class DeliveryController {
         // 2. 배달 완료 알림 전송
         firebaseCloudMessageService.sendMessageCompleteDelivery(recruitId);
         // 3. 모집글 삭제
-        //recruitService.deleteRecruit(recruitId);
+        recruitService.deleteRecruit(recruitId);
     }
 
 }

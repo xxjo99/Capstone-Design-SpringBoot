@@ -147,17 +147,23 @@ public class StoreKeeperService {
 
         StringBuilder result = new StringBuilder();
         for (int i = 0; i < optionContentList.size(); i++) {
-            int optionContentId = Integer.parseInt(optionContentList.get(i));
-            String contentName = optionContentRepository.findByMenuOptionContentId(optionContentId).getOptionContentName();
+            if (!optionContentList.get(i).equals("")) {
+                int optionContentId = Integer.parseInt(optionContentList.get(i));
+                String contentName = optionContentRepository.findByMenuOptionContentId(optionContentId).getOptionContentName();
 
-            if (i != optionContentList.size() - 1) {
-                result.append(contentName).append(", ");
-            } else {
-                result.append(contentName);
+                if (i != optionContentList.size() - 1) {
+                    result.append(contentName).append(", ");
+                } else {
+                    result.append(contentName);
+                }
             }
         }
 
-        return result.toString();
+        if (result.length() == 0) {
+            return "선택옵션없음";
+        } else {
+            return result.toString();
+        }
     }
 
     // 주문 접수
