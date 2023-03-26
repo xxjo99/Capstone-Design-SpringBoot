@@ -26,6 +26,7 @@ out/
 !**/src/main/**/out/
 !**/src/test/**/out/
 application.properties
+firebase_service_key.json
 
 ### NetBeans ###
 /nbproject/private/
