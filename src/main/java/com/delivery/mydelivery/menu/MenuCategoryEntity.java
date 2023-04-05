@@ -10,15 +10,13 @@ import javax.persistence.*;
 @Getter
 @Setter
 @ToString
-@Table(name = "menu")
-public class MenuEntity {
+@Table(name = "menuCategory")
+public class MenuCategoryEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int menuId;
+    private int menuCategoryId;
 
     private int storeId;
-    private String menuName;
-    private int menuPrice;
-    private String menuPicUrl;
-    private int menuCategoryId;
+    private String menuCategoryName;
 }

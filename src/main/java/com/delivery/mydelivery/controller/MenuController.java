@@ -1,9 +1,6 @@
 package com.delivery.mydelivery.controller;
 
-import com.delivery.mydelivery.menu.MenuEntity;
-import com.delivery.mydelivery.menu.OptionContentEntity;
-import com.delivery.mydelivery.menu.OptionEntity;
-import com.delivery.mydelivery.menu.MenuService;
+import com.delivery.mydelivery.menu.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,10 +14,16 @@ public class MenuController {
     @Autowired
     private MenuService menuService;
 
+    // 해당 매장의 메뉴 카테고리 가져옴
+    @GetMapping("/menu/category/{storeId}")
+    public List<MenuCategoryEntity> getMenuCategoryList(@PathVariable int storeId) {
+        return menuService.getMenuCategoryList(storeId);
+    }
+
     // 해당 매장의 메뉴가져옴
-    @GetMapping("/menu/{storeId}")
-    public List<MenuEntity> getMenuList(@PathVariable int storeId) {
-        return menuService.getMenuList(storeId);
+    @GetMapping("/menu/{storeId}/{menuCategoryId}")
+    public List<MenuEntity> getMenuList(@PathVariable int storeId, @PathVariable int menuCategoryId) {
+        return menuService.getMenuList(storeId, menuCategoryId);
     }
 
     // 해당 메뉴의 옵션 가져옴

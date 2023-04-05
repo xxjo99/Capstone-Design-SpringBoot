@@ -103,15 +103,6 @@ class MydeliveryApplicationTests {
     }
 
     @Test
-    void getMenuList() {
-        List<MenuEntity> menuList = menuService.getMenuList(1);
-
-        for (MenuEntity menu : menuList) {
-            System.out.println(menu.toString());
-        }
-    }
-
-    @Test
     void getOptionList() {
         List<OptionEntity> menuOptionList = menuService.getMenuOptionList(11);
 
@@ -300,7 +291,7 @@ class MydeliveryApplicationTests {
     void getOrderHistory() {
         List<OrderHistoryEntity> orderHistoryList = orderHistoryService.getOrderHistory(1);
         for (OrderHistoryEntity orderHistory : orderHistoryList) {
-            System.out.println(orderHistoryList.toString());
+            System.out.println(orderHistory.toString());
         }
     }
 
@@ -308,6 +299,14 @@ class MydeliveryApplicationTests {
     void getImage() {
         byte[] image = orderHistoryService.getImage(67, 3);
         System.out.println(Arrays.toString(image));
+    }
+
+    @Test
+    void getMenuList() {
+        List<MenuEntity> menuList = menuService.getMenuList(1, 1);
+        for (MenuEntity menu : menuList) {
+            System.out.println(menu.toString());
+        }
     }
 
 }

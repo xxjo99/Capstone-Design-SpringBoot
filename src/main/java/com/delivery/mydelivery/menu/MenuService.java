@@ -12,22 +12,30 @@ public class MenuService {
     private MenuRepository menuRepository;
 
     @Autowired
+    private MenuCategoryRepository menuCategoryRepository;
+
+    @Autowired
     private OptionRepository optionRepository;
 
     @Autowired
     private OptionContentRepository optionContentRepository;
 
-    // 매장id로 메뉴 목록을 가져옴
-    public List<MenuEntity> getMenuList(int storeId) {
-        return menuRepository.findByStoreId(storeId);
+    // 매장 id로 메뉴 카테고리 목록 목록
+    public List<MenuCategoryEntity> getMenuCategoryList(int storeId) {
+        return menuCategoryRepository.findByStoreId(storeId);
     }
 
-    // 메뉴id로 옵션 종류를 가져옴
+    // 매장id, 카테고리 id로 메뉴 목록 검색
+    public List<MenuEntity> getMenuList(int storeId, int menuCategoryId) {
+        return menuRepository.findByStoreIdAndMenuCategoryId(storeId, menuCategoryId);
+    }
+
+    // 메뉴id로 옵션 종류 검색
     public List<OptionEntity> getMenuOptionList(int menuId) {
         return optionRepository.findByMenuId(menuId);
     }
 
-    // 메뉴옵션id로 옵션 내용을 가져옴
+    // 메뉴옵션id로 옵션 내용 검색
     public List<OptionContentEntity> getMenuOptionContentList(int menuOptionId) {
         return optionContentRepository.findByMenuOptionId(menuOptionId);
     }
