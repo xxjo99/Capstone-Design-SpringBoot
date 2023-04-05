@@ -2,9 +2,11 @@ package com.delivery.mydelivery.order;
 
 import com.delivery.mydelivery.menu.OptionContentRepository;
 import com.delivery.mydelivery.recruit.*;
+import com.delivery.mydelivery.user.SchoolEntity;
 import com.delivery.mydelivery.user.UserEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.util.Streamable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,6 +31,9 @@ public class OrderService {
 
     @Autowired
     private ParticipantOrderRepository participantOrderRepository;
+
+    @Autowired
+    private DeliveryPlaceRepository deliveryPlaceRepository;
 
     // 장바구니에 메뉴 추가
     public OrderEntity addMenu(OrderEntity order) {
@@ -71,6 +76,19 @@ public class OrderService {
     public void delete(int orderId) {
         OrderEntity order = orderRepository.findByOrderId(orderId);
         orderRepository.delete(order);
+    }
+
+    // 장소 리스트
+    public List<String> getDeliveryPlaceList() {
+        List<DeliveryPlaceEntity> deliveryPlaceList = new ArrayList<>();
+        Streamable.of(deliveryPlaceRepository.findAll()).forEach(deliveryPlaceList::add);
+
+        List<String> deliveryPlaceListResult = new ArrayList<>();
+        for (DeliveryPlaceEntity deliveryPlace : deliveryPlaceList) {
+            deliveryPlaceListResult.add(deliveryPlace.getPlace());
+        }
+
+        return deliveryPlaceListResult;
     }
 
     // 모집글 등록

@@ -1,5 +1,6 @@
 package com.delivery.mydelivery.controller;
 
+import com.delivery.mydelivery.order.DeliveryPlaceEntity;
 import com.delivery.mydelivery.order.OrderEntity;
 import com.delivery.mydelivery.order.OrderService;
 import com.delivery.mydelivery.recruit.RecruitEntity;
@@ -48,6 +49,12 @@ public class OrderController {
     @DeleteMapping("/order/delete/{orderId}")
     public void deleteOrder(@PathVariable int orderId) {
         orderService.delete(orderId);
+    }
+
+    // 장소 리스트
+    @GetMapping("/order/place")
+    public List<String> getDeliveryPlaceList() {
+        return orderService.getDeliveryPlaceList();
     }
 
     // 모집글 등록
