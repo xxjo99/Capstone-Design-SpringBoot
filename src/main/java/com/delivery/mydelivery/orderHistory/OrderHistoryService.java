@@ -1,6 +1,8 @@
 package com.delivery.mydelivery.orderHistory;
 
 import com.delivery.mydelivery.recruit.*;
+import com.delivery.mydelivery.store.StoreEntity;
+import com.delivery.mydelivery.store.StoreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,6 +25,8 @@ public class OrderHistoryService {
     private ParticipantOrderRepository participantOrderRepository;
     @Autowired
     private RecruitRepository recruitRepository;
+    @Autowired
+    private StoreRepository storeRepository;
 
     // 주문 내역
     public List<OrderHistoryEntity> getOrderHistory(int userId) {
@@ -68,6 +72,7 @@ public class OrderHistoryService {
                 orderHistoryDetail.setRecruitId(recruitId);
                 orderHistoryDetail.setUserId(userId);
                 orderHistoryDetail.setStoreId(recruit.getStoreId());
+                orderHistoryDetail.setMenuId(participantOrder.getMenuId());
                 orderHistoryDetail.setSelectOption(participantOrder.getSelectOption());
                 orderHistoryDetail.setAmount(participantOrder.getAmount());
                 orderHistoryDetail.setTotalPrice(participantOrder.getTotalPrice());
@@ -76,6 +81,16 @@ public class OrderHistoryService {
 
         }
 
+    }
+
+    // 절약한 배달비
+    public int getSaveMoney(int recruitId, int userId) {
+        OrderHistoryEntity orderHistory = orderHistoryRepository.findByRecruitIdAndUserId(recruitId, userId);
+        int participantCount = orderHistory.getParticipantCount();
+        StoreEntity store = storeRepository.findByStoreId(orderHistory.getStoreId());
+        int deliveryTip = Integer.parseInt(store.getDeliveryTip());
+
+        return deliveryTip / participantCount;
     }
 
     // 상세주문내역

@@ -20,6 +20,7 @@ public class OrderHistoryDetailEntity {
     private int recruitId;
     private int userId;
     private int storeId;
+    private int menuId;
     private String selectOption;
     private int amount;
     private int totalPrice;

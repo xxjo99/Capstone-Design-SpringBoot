@@ -30,6 +30,12 @@ public class OrderHistoryController {
         return orderHistoryService.getOrderHistoryDetail(recruitId, userId);
     }
 
+    // 절약한 배달비
+    @GetMapping("/order/history/save/{recruitId}/{userId}")
+    public int getSaveMoney(@PathVariable int recruitId, @PathVariable int userId) {
+        return orderHistoryService.getSaveMoney(recruitId, userId);
+    }
+
     // 배달 완료 이미지
     @GetMapping("/order/image/{recruitId}/{userId}")
     public byte[] getImage(@PathVariable int recruitId, @PathVariable int userId) {

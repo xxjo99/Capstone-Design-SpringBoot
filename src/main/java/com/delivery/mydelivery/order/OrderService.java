@@ -2,8 +2,6 @@ package com.delivery.mydelivery.order;
 
 import com.delivery.mydelivery.menu.OptionContentRepository;
 import com.delivery.mydelivery.recruit.*;
-import com.delivery.mydelivery.user.SchoolEntity;
-import com.delivery.mydelivery.user.UserEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.Streamable;
