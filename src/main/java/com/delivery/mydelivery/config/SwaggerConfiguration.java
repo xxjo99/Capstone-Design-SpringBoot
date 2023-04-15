@@ -28,14 +28,14 @@ public class SwaggerConfiguration extends WebMvcConfigurationSupport {
                 .apis(RequestHandlerSelectors.basePackage("com.delivery.mydelivery")) // Controller가 들어있는 패키지. 이 경로의 하위에 있는 api만 표시됨.
                 .paths(PathSelectors.any()) // 위 패키지 안의 api 중 지정된 path만 보여줌. (any()로 설정 시 모든 api가 보여짐)
                 .build()
-                .useDefaultResponseMessages(false);
+                .useDefaultResponseMessages(false); // swagger에서 제공해주는 응답코드 (200,401,403,404)에 대한 기본 메시지 사용 여부
     }
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("타이틀")
-                .description("설명부분")
-                .version("1.0.0")
+                .title("타이틀") // 프로젝트 타이틀
+                .description("설명부분") // 프로젝트 설명
+                .version("1.0.0") // 버전
                 .build();
     }
 
