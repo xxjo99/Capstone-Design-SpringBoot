@@ -71,11 +71,11 @@ public class UserService {
     public void setParticipationRestriction(int userId) {
         LocalDateTime currentTime = LocalDateTime.now();
 
-        // 제한이 되어있는지 검색, 이미 제한되어있다면 24시간을 추가로 설정
+        // 제한이 되어있는지 검색, 이미 제한되어있다면 6시간을 추가로 설정
         ParticipationRestrictionEntity participationRestriction = participationRestrictionRepository.findByUserId(userId);
         if (participationRestriction != null) {
             LocalDateTime restrictionPeriod = participationRestriction.getRestrictionPeriod().toLocalDateTime();
-            LocalDateTime newRestrictionPeriod = restrictionPeriod.plusHours(24);
+            LocalDateTime newRestrictionPeriod = restrictionPeriod.plusHours(6);
             participationRestriction.setRestrictionPeriod(Timestamp.valueOf(newRestrictionPeriod));
 
             participationRestrictionRepository.save(participationRestriction);
@@ -83,7 +83,7 @@ public class UserService {
             participationRestriction = new ParticipationRestrictionEntity();
 
             participationRestriction.setUserId(userId);
-            Timestamp restrictionPeriod = Timestamp.valueOf(currentTime.plusHours(24));
+            Timestamp restrictionPeriod = Timestamp.valueOf(currentTime.plusHours(6));
             participationRestriction.setRestrictionPeriod(restrictionPeriod);
 
             participationRestrictionRepository.save(participationRestriction);
