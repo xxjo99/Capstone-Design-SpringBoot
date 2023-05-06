@@ -12,4 +12,6 @@ public interface KeywordRepository extends CrudRepository<KeywordEntity, Integer
 
     List<KeywordEntity> findByUserId(int userId);
 
+    List<KeywordEntity> findByKeyword(String keyword);
+
 }

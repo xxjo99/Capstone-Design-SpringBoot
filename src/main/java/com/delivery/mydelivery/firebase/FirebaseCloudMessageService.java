@@ -1,5 +1,7 @@
 package com.delivery.mydelivery.firebase;
 
+import com.delivery.mydelivery.keyword.KeywordEntity;
+import com.delivery.mydelivery.keyword.KeywordRepository;
 import com.delivery.mydelivery.recruit.ParticipantEntity;
 import com.delivery.mydelivery.recruit.ParticipantRepository;
 import com.delivery.mydelivery.recruit.RecruitEntity;
@@ -30,13 +32,15 @@ public class FirebaseCloudMessageService {
     private final ObjectMapper objectMapper;
 
     @Autowired
-    ParticipantRepository participantRepository;
+    private ParticipantRepository participantRepository;
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
     @Autowired
     private RecruitRepository recruitRepository;
     @Autowired
     private StoreRepository storeRepository;
+    @Autowired
+    private KeywordRepository keywordRepository;
 
     // 알림 전송
     public void sendMessage(String targetToken, String title, String body) throws IOException {
@@ -147,6 +151,23 @@ public class FirebaseCloudMessageService {
             UserEntity user = userRepository.findByUserId(participant.getUserId());
             sendMessage(user.getToken(), title, body);
         }
+    }
+
+    // 등록한 키워드 알림 전송
+    public void sendKeywordMessage(String keyword, String storeName) throws IOException {
+        // 메시지 내용
+        String title = keyword + "키워드 알림";
+        String body = storeName + "에 대한 모집글이 등록되었습니다.";
+
+        // 1. 해당 키워드를 등록한 유저 검색
+        List<KeywordEntity> keywordList = keywordRepository.findByKeyword(keyword);
+
+        // 2. 메시지 전송
+        for (KeywordEntity keywordEntity : keywordList) {
+            UserEntity user = userRepository.findByUserId(keywordEntity.getUserId());
+            sendMessage(user.getToken(), title, body);
+        }
+
     }
 
     // 메시지 생성
