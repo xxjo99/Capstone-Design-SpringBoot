@@ -156,14 +156,17 @@ public class RecruitService {
         return participantListResult;
     }
 
+    // 배달팁 계산
+    public int getDeliveryTip(int recruitId) {
+        RecruitEntity recruit = recruitRepository.findByRecruitId(recruitId);
+        StoreEntity store = storeRepository.findByStoreId(recruit.getStoreId());
+        return Integer.parseInt(store.getDeliveryTip()) / recruit.getPerson();
+    }
+
     // 추가한 메뉴, 배달비를 포함한 최종결제금액 반환
     public int getFinalPayment(int recruitId, int storeId, int userId) {
         // 참여자수
-        int participantCount = getParticipantCount(recruitId);
-
-        // 1인당 배달팁
-        StoreEntity store = storeRepository.findByStoreId(storeId);
-        int deliveryTip = Integer.parseInt(store.getDeliveryTip()) / participantCount;
+        int deliveryTip = getDeliveryTip(recruitId);
 
         // 사용자가 담은 메뉴들의 총 금액
         int totalPrice = getOrdersTotalPrice(recruitId, userId);
@@ -343,6 +346,24 @@ public class RecruitService {
             participantRepository.delete(participant);
         }
 
+    }
+
+    // 추가요금 계산
+    public int surcharge(int recruitId) {
+        // 매장 배달비
+        RecruitEntity recruit = recruitRepository.findByRecruitId(recruitId);
+        StoreEntity store = storeRepository.findByStoreId(recruit.getStoreId());
+        int deliveryTip = Integer.parseInt(store.getDeliveryTip());
+
+        // 최초 지불 배달비
+        int initialDeliveryTip = deliveryTip / recruit.getPerson();
+
+        // 지불해야할 배달비
+        int participantCount = getParticipantList(recruitId).size();
+        int paymentDeliveryTip = deliveryTip / participantCount;
+
+        // 추가요금 계산
+        return paymentDeliveryTip - initialDeliveryTip;
     }
 
 

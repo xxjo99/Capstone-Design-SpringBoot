@@ -12,11 +12,11 @@ import java.util.List;
 public class StoreService {
 
     @Autowired
-    private StoreRepository storeRepoistory;
+    private StoreRepository storeRepository;
 
     // 카테고리, 배달가능지역을 통해 오픈한 매장 검색
     public List<StoreEntity> getOpenedStoreList(String category, String deliveryAvailablePlace) {
-        List<StoreEntity> storeList = storeRepoistory.findByCategoryAndDeliveryAvailablePlace(category, deliveryAvailablePlace);
+        List<StoreEntity> storeList = storeRepository.findByCategoryAndDeliveryAvailablePlace(category, deliveryAvailablePlace);
 
         LocalTime currentTime = LocalTime.now(); // 현재 시간
 
@@ -48,7 +48,7 @@ public class StoreService {
 
     // 카테고리, 배달가능지역을 통해 매장 검색
     public List<StoreEntity> getClosedStoreList(String category, String deliveryAvailablePlace) {
-        List<StoreEntity> storeList = storeRepoistory.findByCategoryAndDeliveryAvailablePlace(category, deliveryAvailablePlace);
+        List<StoreEntity> storeList = storeRepository.findByCategoryAndDeliveryAvailablePlace(category, deliveryAvailablePlace);
 
         LocalTime currentTime = LocalTime.now(); // 현재 시간
 
@@ -76,12 +76,12 @@ public class StoreService {
     }
 
     public StoreEntity getStore(int storeId) {
-        return storeRepoistory.findByStoreId(storeId);
+        return storeRepository.findByStoreId(storeId);
     }
 
     // 열려있는 매장 검색
     public List<StoreEntity> searchOpenStore(String keyword, String deliveryAvailablePlace) {
-        List<StoreEntity> storeList = storeRepoistory.findByStoreNameContaining(keyword);
+        List<StoreEntity> storeList = storeRepository.findByStoreNameContaining(keyword);
 
         LocalTime currentTime = LocalTime.now(); // 현재 시간
 

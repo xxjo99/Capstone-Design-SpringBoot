@@ -1,4 +1,4 @@
-package com.delivery.mydelivery.StoreKeeper;
+package com.delivery.mydelivery.storeKeeper;
 
 import lombok.Getter;
 import lombok.Setter;

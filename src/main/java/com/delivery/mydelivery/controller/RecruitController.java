@@ -81,6 +81,12 @@ public class RecruitController {
         return recruitService.getParticipantListExceptMine(recruitId, userId);
     }
 
+    // 배달팁
+    @GetMapping("/recruit/get/tip/{recruitId}")
+    public int getDeliveryTip(@PathVariable int recruitId) {
+        return recruitService.getDeliveryTip(recruitId);
+    }
+
     // 최종결제금액
     @GetMapping("/recruit/payment/{recruitId}/{storeId}/{userId}")
     public int getFinalPayment(@PathVariable int recruitId, @PathVariable int storeId, @PathVariable int userId) {
@@ -151,6 +157,12 @@ public class RecruitController {
     @PostMapping("/recruit/check/paymentStatus")
     public void checkParticipantPaymentStatus(@RequestParam("recruitId") int recruitId) {
         recruitService.checkParticipantPaymentStatus(recruitId);
+    }
+
+    // 추가요금
+    @GetMapping("/recruit/surcharge/{recruitId}")
+    public int getSurcharge(@PathVariable int recruitId) {
+        return recruitService.surcharge(recruitId);
     }
 
 }

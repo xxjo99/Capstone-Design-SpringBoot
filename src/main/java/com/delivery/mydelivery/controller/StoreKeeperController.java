@@ -1,8 +1,8 @@
 package com.delivery.mydelivery.controller;
 
-import com.delivery.mydelivery.StoreKeeper.DeliveryInfoDTO;
-import com.delivery.mydelivery.StoreKeeper.OrderDTO;
-import com.delivery.mydelivery.StoreKeeper.StoreKeeperService;
+import com.delivery.mydelivery.storeKeeper.DeliveryInfoDTO;
+import com.delivery.mydelivery.storeKeeper.OrderDTO;
+import com.delivery.mydelivery.storeKeeper.StoreKeeperService;
 import com.delivery.mydelivery.firebase.FirebaseCloudMessageService;
 import com.delivery.mydelivery.recruit.RecruitService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,9 +43,11 @@ public class StoreKeeperController {
     // 배달접수, 알림전송
     @PostMapping("/storeKeeper/receipt/{recruitId}")
     public void receiptOrder(@PathVariable int recruitId) throws IOException {
-        // 1. 배달 접수 완료 알림 전송
+        // 1. 지불된 배달비 확인 및 추가
+        storeKeeperService.checkDeliveryTip(recruitId);
+        // 2. 배달 접수 완료 알림 전송
         firebaseCloudMessageService.sendMessageReceipt(recruitId);
-        // 2. 배달 접수
+        // 3. 배달 접수
         storeKeeperService.receiptOrder(recruitId);
     }
 

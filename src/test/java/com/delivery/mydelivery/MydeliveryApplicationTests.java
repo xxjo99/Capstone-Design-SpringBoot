@@ -1,7 +1,7 @@
 package com.delivery.mydelivery;
 
-import com.delivery.mydelivery.StoreKeeper.DeliveryInfoDTO;
-import com.delivery.mydelivery.StoreKeeper.StoreKeeperService;
+import com.delivery.mydelivery.storeKeeper.DeliveryInfoDTO;
+import com.delivery.mydelivery.storeKeeper.StoreKeeperService;
 import com.delivery.mydelivery.delivery.DeliveryService;
 import com.delivery.mydelivery.firebase.FirebaseCloudMessageService;
 import com.delivery.mydelivery.home.CategoryEntity;

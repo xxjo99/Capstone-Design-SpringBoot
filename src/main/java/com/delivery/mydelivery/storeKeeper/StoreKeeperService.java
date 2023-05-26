@@ -1,4 +1,4 @@
-package com.delivery.mydelivery.StoreKeeper;
+package com.delivery.mydelivery.storeKeeper;
 
 import com.delivery.mydelivery.menu.MenuEntity;
 import com.delivery.mydelivery.menu.MenuRepository;
@@ -40,6 +40,9 @@ public class StoreKeeperService {
     private UserRepository userRepository;
     @Autowired
     private PointHistoryRepository pointHistoryRepository;
+
+    @Autowired
+    private RecruitService recruitService;
 
     /// 결제완료된 주문 리스트
     public List<DeliveryInfoDTO> getCompletePaymentRecruitList() {
@@ -164,6 +167,26 @@ public class StoreKeeperService {
         } else {
             return result.toString();
         }
+    }
+
+    // 지불된 배달비 확인 및 추가
+    public void checkDeliveryTip(int recruitId) {
+        RecruitEntity recruit = recruitRepository.findByRecruitId(recruitId);
+        int surcharge = recruitService.surcharge(recruitId);
+
+        if (surcharge != 0) {
+            List<ParticipantEntity> participantList = participantRepository.findByRecruitId(recruitId);
+
+            for (ParticipantEntity participant : participantList) {
+                int paymentMoney = participant.getPaymentMoney();
+                paymentMoney += surcharge;
+                participant.setPaymentMoney(paymentMoney);
+                participantRepository.save(participant);
+            }
+
+        }
+
+
     }
 
     // 주문 접수
